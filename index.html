@@ -1,0 +1,2247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز الحبيب للألحان والدراسات القبطية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            font-family: 'Amiri', serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #8B4513 0%, #DAA520 50%, #8B0000 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 8px 32px rgba(139, 69, 19, 0.15);
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(139, 69, 19, 0.25);
+        }
+        
+        .coptic-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23DAA520' fill-opacity='0.1'%3E%3Cpath d='M30 30c0-11.046-8.954-20-20-20s-20 8.954-20 20 8.954 20 20 20 20-8.954 20-20zm0 0c0 11.046 8.954 20 20 20s20-8.954 20-20-8.954-20-20-20-20 8.954-20 20z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #DAA520;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 coptic-pattern">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+                        <svg class="w-10 h-10 text-yellow-600" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z"/>
+                            <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">مركز الحبيب للألحان والدراسات القبطية</h1>
+                        <p class="text-yellow-200">كنيسة السيدة العذراء والقديس مار يوحنا - المساكن - فيصل</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-center space-x-8 space-x-reverse py-4">
+                <button class="nav-item active px-4 py-2 text-gray-700 hover:text-yellow-600 font-semibold transition-colors" onclick="showSection('home')">
+                    🏠 الصفحة الرئيسية
+                </button>
+                <button class="nav-item px-4 py-2 text-gray-700 hover:text-yellow-600 font-semibold transition-colors" onclick="showSection('curriculum')">
+                    📚 المناهج
+                </button>
+                <button class="nav-item px-4 py-2 text-gray-700 hover:text-yellow-600 font-semibold transition-colors" onclick="showSection('events')">
+                    🎉 الحفلات والمناسبات
+                </button>
+                <button class="nav-item px-4 py-2 text-gray-700 hover:text-yellow-600 font-semibold transition-colors" onclick="showSection('news')">
+                    📰 الأخبار
+                </button>
+                <button id="reportsNavButton" class="nav-item px-4 py-2 text-gray-700 hover:text-yellow-600 font-semibold transition-colors hidden" onclick="showSection('reports')">
+                    📊 التقارير
+                </button>
+                <button class="nav-item px-4 py-2 text-gray-700 hover:text-yellow-600 font-semibold transition-colors" onclick="showSection('login')">
+                    🔑 تسجيل الدخول
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Home Section -->
+        <section id="home" class="section-content fade-in">
+            <div class="grid md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-white rounded-lg p-8 card-shadow hover-lift">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">مرحباً بكم في مركز الحبيب</h2>
+                    <p class="text-gray-600 leading-relaxed text-lg mb-6">
+                        منصة إلكترونية تعليمية وروحية متكاملة تهدف إلى خدمة دارسي الألحان والطقوس الكنسية واللغة القبطية. 
+                        نوفر تجربة سهلة ومنظمة لكل من الدارسين والخدام في رحلة التعلم الروحي.
+                    </p>
+                    
+                    <!-- شعار الخدمة -->
+                    <div class="bg-gradient-to-r from-yellow-50 to-red-50 border-2 border-yellow-300 rounded-lg p-6 mb-6 text-center">
+                        <div class="flex justify-center items-center gap-4 mb-4">
+                            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center">
+                                <span class="text-2xl">🧠</span>
+                            </div>
+                            <div class="text-4xl font-bold text-yellow-600">•</div>
+                            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center">
+                                <span class="text-2xl">🙏</span>
+                            </div>
+                            <div class="text-4xl font-bold text-red-600">•</div>
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                                <span class="text-2xl">😊</span>
+                            </div>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-3">شعار الخدمة</h3>
+                        <div class="flex justify-center items-center gap-6 text-xl font-bold">
+                            <span class="text-yellow-700 bg-yellow-100 px-4 py-2 rounded-full">أفهم</span>
+                            <span class="text-red-700 bg-red-100 px-4 py-2 rounded-full">صلّي</span>
+                            <span class="text-green-700 bg-green-100 px-4 py-2 rounded-full">استمتع</span>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 border-r-4 border-blue-500 p-6 rounded-lg">
+                        <h3 class="font-bold text-blue-800 mb-3 text-xl">🎯 رؤيتنا</h3>
+                        <p class="text-blue-700 leading-relaxed text-lg mb-4">
+                            رؤيتنا أن الشعب كله يستمتع بليتورجية الكنيسة من قداس وتسبحة وصلوات مختلفة... 
+                            نصلي بالروح والذهن أيضاً
+                        </p>
+                        <div class="bg-white rounded-lg p-4 border-2 border-blue-200">
+                            <p class="text-center text-blue-800 font-bold text-lg">
+                                "نصلي بالروح والذهن أيضاً" - 1 كورنثوس 14:15
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg p-8 card-shadow hover-lift">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">مواعيد الخدمة</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-4 bg-red-50 rounded-lg">
+                            <span class="font-semibold text-red-800">تمهيدي</span>
+                            <span class="text-red-600">الجمعة 5:00 - 7:00 مساءً</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-yellow-50 rounded-lg">
+                            <span class="font-semibold text-yellow-800">أولي وثانية</span>
+                            <span class="text-yellow-600">الجمعة 5:00 - 7:00 مساءً</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-green-50 rounded-lg">
+                            <span class="font-semibold text-green-800">ثالثة ورابعة</span>
+                            <span class="text-green-600">الجمعة 5:00 - 7:00 مساءً</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                            <span class="font-semibold text-blue-800">خامسة وسادسة</span>
+                            <span class="text-blue-600">الجمعة 5:00 - 7:00 مساءً</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-purple-50 rounded-lg">
+                            <span class="font-semibold text-purple-800">إعدادي - ثانوي</span>
+                            <span class="text-purple-600">الجمعة 5:00 - 7:00 مساءً</span>
+                        </div>
+                        <div class="flex items-center justify-between p-4 bg-indigo-50 rounded-lg">
+                            <span class="font-semibold text-indigo-800">شباب وخريجين</span>
+                            <span class="text-indigo-600">الجمعة 5:00 - 7:00 مساءً</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-white rounded-lg p-6 card-shadow hover-lift text-center">
+                    <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📖</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">تعليم تفاعلي</h3>
+                    <p class="text-gray-600">منصة حديثة لتعليم الألحان والطقوس الكنسية</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 card-shadow hover-lift text-center">
+                    <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">📊</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">متابعة النتائج</h3>
+                    <p class="text-gray-600">رصد الدرجات ومتابعة التقدم الأكاديمي</p>
+                </div>
+                
+                <div class="bg-white rounded-lg p-6 card-shadow hover-lift text-center">
+                    <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <span class="text-2xl">👥</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-3">إدارة متطورة</h3>
+                    <p class="text-gray-600">نظام شامل لإدارة الحضور والغياب</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curriculum Section -->
+        <section id="curriculum" class="section-content hidden">
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">المناهج الدراسية</h2>
+                
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6 hover-lift">
+                        <h3 class="text-xl font-bold text-red-800 mb-4">السنة الأولى</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>أساسيات الألحان القبطية</span>
+                                <button class="text-red-600 hover:text-red-800" onclick="viewPDF('أساسيات الألحان القبطية')">📄 عرض</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>مقدمة في اللغة القبطية</span>
+                                <button class="text-red-600 hover:text-red-800" onclick="viewPDF('مقدمة في اللغة القبطية')">📄 عرض</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>الطقوس الكنسية الأساسية</span>
+                                <button class="text-red-600 hover:text-red-800" onclick="viewPDF('الطقوس الكنسية الأساسية')">📄 عرض</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6 hover-lift">
+                        <h3 class="text-xl font-bold text-yellow-800 mb-4">السنة الثانية</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>ألحان القداس الإلهي</span>
+                                <button class="text-yellow-600 hover:text-yellow-800" onclick="viewPDF('ألحان القداس الإلهي')">📄 عرض</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>اللغة القبطية المتوسطة</span>
+                                <button class="text-yellow-600 hover:text-yellow-800" onclick="viewPDF('اللغة القبطية المتوسطة')">📄 عرض</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>طقوس الأعياد الكبرى</span>
+                                <button class="text-yellow-600 hover:text-yellow-800" onclick="viewPDF('طقوس الأعياد الكبرى')">📄 عرض</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-6 hover-lift">
+                        <h3 class="text-xl font-bold text-green-800 mb-4">السنة الثالثة</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>الألحان المتقدمة</span>
+                                <button class="text-green-600 hover:text-green-800" onclick="viewPDF('الألحان المتقدمة')">📄 عرض</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>تاريخ الكنيسة القبطية</span>
+                                <button class="text-green-600 hover:text-green-800" onclick="viewPDF('تاريخ الكنيسة القبطية')">📄 عرض</button>
+                            </div>
+                            <div class="flex items-center justify-between p-3 bg-white rounded border">
+                                <span>الطقوس الخاصة والمناسبات</span>
+                                <button class="text-green-600 hover:text-green-800" onclick="viewPDF('الطقوس الخاصة والمناسبات')">📄 عرض</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="section-content hidden">
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">الحفلات والمناسبات</h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6 hover-lift">
+                        <div class="w-full h-48 bg-red-200 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-4xl">🎓</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-red-800 mb-2">حفل ختام السنة الدراسية الأولى</h3>
+                        <p class="text-red-600 mb-2">يوليو 2024</p>
+                        <p class="text-gray-700">احتفالية تخرج الدفعة الأولى من دارسي المركز</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 hover-lift">
+                        <div class="w-full h-48 bg-yellow-200 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-4xl">🎉</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-yellow-800 mb-2">حفل ختام السنة الدراسية الثانية</h3>
+                        <p class="text-yellow-600 mb-2">يوليو 2025</p>
+                        <p class="text-gray-700">تكريم خريجي السنة الثانية وعرض إنجازاتهم</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 hover-lift">
+                        <div class="w-full h-48 bg-blue-200 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-4xl">🏆</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-blue-800 mb-2">لقاء الأوائل</h3>
+                        <p class="text-blue-600 mb-2">يونيو 2025</p>
+                        <p class="text-gray-700">تكريم الطلاب المتفوقين والأوائل في جميع المراحل</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 hover-lift">
+                        <div class="w-full h-48 bg-green-200 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-4xl">🙏</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-green-800 mb-2">اليوم الروحي لدارسي المركز</h3>
+                        <p class="text-green-600 mb-2">موسمي</p>
+                        <p class="text-gray-700">يوم روحي مميز لدارسي مركز الحبيب للألحان والدراسات القبطية</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 hover-lift">
+                        <div class="w-full h-48 bg-purple-200 rounded-lg mb-4 flex items-center justify-center">
+                            <span class="text-4xl">🥁</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-purple-800 mb-2">ورشة عمل للألحان</h3>
+                        <p class="text-purple-600 mb-2">دوري</p>
+                        <p class="text-gray-700">ورشة متخصصة لتعليم الدف والتريانتو في الألحان القبطية</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- News Section -->
+        <section id="news" class="section-content hidden">
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">أخبار المركز</h2>
+                    <button onclick="showRegistrationForm()" class="bg-gradient-to-r from-green-600 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                        <span class="flex items-center gap-2">
+                            <span class="text-xl">📝</span>
+                            تسجيل دارس جديد
+                        </span>
+                    </button>
+                </div>
+                
+                <div class="space-y-6">
+                    <!-- Latest News -->
+                    <div class="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-lg p-6 hover-lift">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-2xl">🎓</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-gray-800">استقبال دفعة جديدة من الدارسين</h3>
+                                    <span class="text-sm text-gray-500 bg-white px-2 py-1 rounded">سبتمبر 2025</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">يسعد مركز الحبيب للألحان والدراسات القبطية استقبال دفعة جديدة من الدارسين من سن الحضانة إلى أولياء الأمور. التسجيل مفتوح الآن!</p>
+                                <div class="flex gap-2">
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded-full text-sm">تسجيل</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">دفعة جديدة</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Item 2 -->
+                    <div class="bg-gradient-to-r from-red-50 to-orange-50 border border-red-200 rounded-lg p-6 hover-lift">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-2xl">📝</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-gray-800">امتحان الترم الأول</h3>
+                                    <span class="text-sm text-gray-500 bg-white px-2 py-1 rounded">12 ديسمبر 2025</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">موعد امتحان الفصل الدراسي الأول يوم الجمعة 12 ديسمبر 2025. يرجى من جميع الدارسين الاستعداد والحضور في الموعد المحدد.</p>
+                                <div class="flex gap-2">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">امتحان</span>
+                                    <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded-full text-sm">مهم</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Item 3 -->
+                    <div class="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-lg p-6 hover-lift">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-2xl">🆕</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-gray-800">بداية الترم الثاني</h3>
+                                    <span class="text-sm text-gray-500 bg-white px-2 py-1 rounded">30 يناير 2026</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">بداية الفصل الدراسي الثاني يوم الجمعة 30 يناير 2026. نتمنى لجميع الدارسين فصلاً دراسياً مثمراً ومليئاً بالبركات.</p>
+                                <div class="flex gap-2">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-sm">ترم جديد</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">بداية</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Item 4 -->
+                    <div class="bg-gradient-to-r from-yellow-50 to-red-50 border border-yellow-200 rounded-lg p-6 hover-lift">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-2xl">📊</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-gray-800">امتحان الميد ترم</h3>
+                                    <span class="text-sm text-gray-500 bg-white px-2 py-1 rounded">17 أكتوبر 2025</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">امتحان منتصف الفصل الدراسي (الميد ترم) يوم الجمعة 17 أكتوبر 2025. هذا الامتحان مهم لتقييم مستوى الدارسين.</p>
+                                <div class="flex gap-2">
+                                    <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-sm">ميد ترم</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded-full text-sm">تقييم</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Item 5 -->
+                    <div class="bg-gradient-to-r from-purple-50 to-indigo-50 border border-purple-200 rounded-lg p-6 hover-lift">
+                        <div class="flex items-start gap-4">
+                            <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0">
+                                <span class="text-2xl">⛪</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h3 class="text-xl font-bold text-gray-800">القداس الشهري لدارسي المركز</h3>
+                                    <span class="text-sm text-gray-500 bg-white px-2 py-1 rounded">25 أكتوبر 2025</span>
+                                </div>
+                                <p class="text-gray-600 mb-3">القداس الشهري الخاص بدارسي مركز الحبيب للألحان والدراسات القبطية يوم السبت الموافق 25 أكتوبر 2025. دعوة عامة لجميع الدارسين وأولياء الأمور.</p>
+                                <div class="flex gap-2">
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded-full text-sm">قداس</span>
+                                    <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-sm">روحي</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!-- Student Profile Section -->
+        <section id="studentProfile" class="section-content hidden">
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">الملف الشخصي للدارس</h2>
+                    <button onclick="showSection('results')" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        العودة للنتائج
+                    </button>
+                </div>
+                
+                <div id="profileContent">
+                    <!-- Profile content will be loaded here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Reports Section -->
+        <section id="reports" class="section-content hidden">
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">📊 التقارير والإحصائيات</h2>
+                
+                <!-- Summary Cards -->
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 text-center hover-lift">
+                        <div class="text-3xl mb-2">👥</div>
+                        <h3 class="text-2xl font-bold text-blue-800" id="totalStudents">0</h3>
+                        <p class="text-blue-600">إجمالي الدارسين</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 text-center hover-lift">
+                        <div class="text-3xl mb-2">🏆</div>
+                        <h3 class="text-2xl font-bold text-green-800" id="excellentStudents">0</h3>
+                        <p class="text-green-600">ممتاز</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 text-center hover-lift">
+                        <div class="text-3xl mb-2">⭐</div>
+                        <h3 class="text-2xl font-bold text-yellow-800" id="veryGoodStudents">0</h3>
+                        <p class="text-yellow-600">جيد جداً</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 rounded-lg p-6 text-center hover-lift">
+                        <div class="text-3xl mb-2">📈</div>
+                        <h3 class="text-2xl font-bold text-red-800" id="averageScore">0%</h3>
+                        <p class="text-red-600">متوسط النتائج</p>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="grid md:grid-cols-2 gap-8 mb-8">
+                    <!-- Grade Distribution Chart -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">توزيع النتائج النهائية</h3>
+                        <div id="gradeChart" class="space-y-3">
+                            <!-- Chart will be generated here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Subject Performance Chart -->
+                    <div class="bg-gray-50 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">متوسط الدرجات حسب المادة</h3>
+                        <div id="subjectChart" class="space-y-3">
+                            <!-- Chart will be generated here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stage Performance -->
+                <div class="bg-gray-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">الأداء حسب السنة الدراسية</h3>
+                    <div id="stagePerformance" class="grid md:grid-cols-3 gap-4">
+                        <!-- Stage performance will be generated here -->
+                    </div>
+                </div>
+
+                <!-- Top Performers -->
+                <div class="bg-gradient-to-r from-yellow-50 to-red-50 rounded-lg p-6 mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">🏆 أفضل 10 دارسين</h3>
+                    <div id="topPerformers" class="space-y-2">
+                        <!-- Top performers will be listed here -->
+                    </div>
+                </div>
+
+                <!-- Connection Status -->
+                <div class="bg-gray-50 rounded-lg p-6 text-center">
+                    <h3 class="text-lg font-bold text-gray-800 mb-4">📡 حالة الاتصال بقاعدة البيانات</h3>
+                    <div id="connectionStatus" class="inline-block text-sm px-4 py-2 rounded-full">
+                        <span id="statusText">🔄 جاري التحميل...</span>
+                    </div>
+                    <div class="mt-4 text-xs text-gray-500">
+                        آخر تحديث: <span id="lastUpdate">جاري التحميل...</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section-content hidden">
+            <div class="max-w-md mx-auto bg-white rounded-lg p-8 card-shadow">
+                <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">تسجيل الدخول</h2>
+                
+                <div class="mb-6">
+                    <div class="flex border-b border-gray-200">
+                        <button id="studentTab" class="flex-1 py-3 px-4 text-center font-semibold text-yellow-600 border-b-2 border-yellow-600" onclick="switchTab('student')">
+                            دخول الطالب
+                        </button>
+                        <button id="teacherTab" class="flex-1 py-3 px-4 text-center font-semibold text-gray-500" onclick="switchTab('teacher')">
+                            دخول الخادم
+                        </button>
+                    </div>
+                </div>
+                
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div id="studentLogin">
+                        <div class="mb-6">
+                            <label for="studentCode" class="block text-sm font-semibold text-gray-700 mb-2">كود الطالب</label>
+                            <input type="text" id="studentCode" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="أدخل كود الطالب الخاص بك">
+                        </div>
+                    </div>
+                    
+                    <div id="teacherLogin" class="hidden">
+                        <div class="mb-4">
+                            <label for="teacherUsername" class="block text-sm font-semibold text-gray-700 mb-2">كود الخادم</label>
+                            <input type="text" id="teacherUsername" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="أدخل كود الخادم الخاص بك">
+                        </div>
+                        <div class="mb-6">
+                            <label for="teacherPassword" class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور</label>
+                            <input type="password" id="teacherPassword" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="أدخل كلمة المرور">
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-yellow-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-yellow-700 transition-colors">
+                        تسجيل الدخول
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Student Registration Section -->
+        <section id="studentRegistration" class="section-content hidden">
+            <div class="max-w-2xl mx-auto bg-white rounded-lg p-8 card-shadow">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">📝 تسجيل دارس جديد</h2>
+                    <button onclick="showSection('news')" class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                        العودة للأخبار
+                    </button>
+                </div>
+                
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <h3 class="font-bold text-blue-800 mb-2">📋 تعليمات التسجيل:</h3>
+                    <ul class="text-sm text-blue-700 space-y-1">
+                        <li>• املأ جميع البيانات المطلوبة بدقة</li>
+                        <li>• سيتم مراجعة طلبك من قبل الخدام</li>
+                        <li>• ستحصل على كود الدارس بعد الموافقة</li>
+                        <li>• سيتم التواصل معك عبر الهاتف لتأكيد التسجيل</li>
+                    </ul>
+                </div>
+                
+                <form id="registrationForm" onsubmit="handleStudentRegistration(event)">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="studentName" class="block text-sm font-semibold text-gray-700 mb-2">الاسم الكامل *</label>
+                            <input type="text" id="studentName" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="أدخل الاسم الكامل" required>
+                        </div>
+                        
+                        <div>
+                            <label for="gender" class="block text-sm font-semibold text-gray-700 mb-2">النوع *</label>
+                            <select id="gender" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+                                <option value="">اختر النوع</option>
+                                <option value="ذكر">ذكر</option>
+                                <option value="أنثى">أنثى</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="studentPhone" class="block text-sm font-semibold text-gray-700 mb-2">رقم الهاتف *</label>
+                            <input type="tel" id="studentPhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="01xxxxxxxxx" required pattern="[0-9]{11}">
+                        </div>
+                        
+                        <div>
+                            <label for="parentPhone" class="block text-sm font-semibold text-gray-700 mb-2">رقم هاتف ولي الأمر</label>
+                            <input type="tel" id="parentPhone" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="01xxxxxxxxx" pattern="[0-9]{11}">
+                        </div>
+                        
+                        <div>
+                            <label for="birthDate" class="block text-sm font-semibold text-gray-700 mb-2">تاريخ الميلاد *</label>
+                            <input type="date" id="birthDate" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+                        </div>
+                        
+                        <div>
+                            <label for="desiredStage" class="block text-sm font-semibold text-gray-700 mb-2">السنة الدراسية *</label>
+                            <select id="desiredStage" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" required>
+                                <option value="">اختر السنة الدراسية</option>
+                                <option value="KG1">KG1</option>
+                                <option value="KG2">KG2</option>
+                                <option value="الصف الأول الأبتدائي">الصف الأول الأبتدائي</option>
+                                <option value="الصف الثاني الأبتدائي">الصف الثاني الأبتدائي</option>
+                                <option value="الصف الثالث الأبتدائي">الصف الثالث الأبتدائي</option>
+                                <option value="الصف الرابع الأبتدائي">الصف الرابع الأبتدائي</option>
+                                <option value="الصف الخامس الأبتدائي">الصف الخامس الأبتدائي</option>
+                                <option value="الصف السادس الأبتدائي">الصف السادس الأبتدائي</option>
+                                <option value="الصف الأول الأعدادي">الصف الأول الأعدادي</option>
+                                <option value="الصف الثاني الأعدادي">الصف الثاني الأعدادي</option>
+                                <option value="الصف الثالث الأعدادي">الصف الثالث الأعدادي</option>
+                                <option value="الصف الأول الثانوي">الصف الأول الثانوي</option>
+                                <option value="الصف الثاني الثانوي">الصف الثاني الثانوي</option>
+                                <option value="الصف الثالث الثانوي">الصف الثالث الثانوي</option>
+                                <option value="شباب">شباب</option>
+                                <option value="خريجين">خريجين</option>
+                                <option value="أولياء أمور">أولياء أمور</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="deaconDegree" class="block text-sm font-semibold text-gray-700 mb-2">درجة الرسامة (للشمامسة فقط)</label>
+                            <select id="deaconDegree" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                                <option value="">اختر درجة الرسامة</option>
+                                <option value="غير مرسوم">غير مرسوم</option>
+                                <option value="أبصالطس">أبصالطس</option>
+                                <option value="اغنسطس">اغنسطس</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <label for="studentAddress" class="block text-sm font-semibold text-gray-700 mb-2">العنوان *</label>
+                        <textarea id="studentAddress" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" rows="3" placeholder="أدخل العنوان التفصيلي" required></textarea>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <label for="registrationNotes" class="block text-sm font-semibold text-gray-700 mb-2">ملاحظات إضافية</label>
+                        <textarea id="registrationNotes" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" rows="3" placeholder="أي ملاحظات أو استفسارات إضافية (اختياري)"></textarea>
+                    </div>
+                    
+                    <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <div class="flex items-start gap-3">
+                            <input type="checkbox" id="agreeTerms" class="mt-1" required>
+                            <label for="agreeTerms" class="text-sm text-gray-700">
+                                أوافق على <strong>شروط وأحكام</strong> مركز الحبيب للألحان والدراسات القبطية، وأتعهد بالالتزام بالحضور والمشاركة الفعالة في الأنشطة التعليمية.
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex gap-4">
+                        <button type="submit" class="flex-1 bg-gradient-to-r from-green-600 to-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:from-green-700 hover:to-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl">
+                            📤 إرسال طلب التسجيل
+                        </button>
+                        <button type="button" onclick="document.getElementById('registrationForm').reset()" class="bg-gray-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                            🔄 إعادة تعيين
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Teacher Dashboard (Hidden by default) -->
+        <section id="teacherDashboard" class="section-content hidden">
+            <div class="bg-white rounded-lg p-8 card-shadow">
+                <div class="flex justify-between items-center mb-8">
+                    <h2 class="text-3xl font-bold text-gray-800">لوحة تحكم الخادم</h2>
+                    <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                        تسجيل الخروج
+                    </button>
+                </div>
+                
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+                    <button onclick="showTeacherSection('attendance')" class="bg-blue-50 border-2 border-blue-200 rounded-lg p-6 hover:bg-blue-100 transition-colors">
+                        <div class="text-4xl mb-3">📝</div>
+                        <h3 class="text-xl font-bold text-blue-800">تسجيل الحضور</h3>
+                    </button>
+                    
+                    <button onclick="showTeacherSection('grades')" class="bg-green-50 border-2 border-green-200 rounded-lg p-6 hover:bg-green-100 transition-colors">
+                        <div class="text-4xl mb-3">📊</div>
+                        <h3 class="text-xl font-bold text-green-800">إدارة الدرجات</h3>
+                    </button>
+                    
+                    <button onclick="showTeacherSection('students')" class="bg-purple-50 border-2 border-purple-200 rounded-lg p-6 hover:bg-purple-100 transition-colors">
+                        <div class="text-4xl mb-3">👥</div>
+                        <h3 class="text-xl font-bold text-purple-800">إدارة الطلاب</h3>
+                    </button>
+                    
+                    <button onclick="showTeacherSection('password')" class="bg-yellow-50 border-2 border-yellow-200 rounded-lg p-6 hover:bg-yellow-100 transition-colors">
+                        <div class="text-4xl mb-3">🔐</div>
+                        <h3 class="text-xl font-bold text-yellow-800">تغيير كلمة المرور</h3>
+                    </button>
+                </div>
+                
+                <div id="teacherContent">
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🎯</div>
+                        <p class="text-gray-500 text-lg">اختر أحد الخيارات أعلاه للبدء</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="gradient-bg text-white mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="text-center">
+                <h3 class="text-xl font-bold mb-4">مركز الحبيب للألحان والدراسات القبطية</h3>
+                <p class="text-yellow-200 mb-4">كنيسة السيدة العذراء والقديس مار يوحنا - المساكن - فيصل</p>
+                <p class="text-sm text-yellow-100">جميع الحقوق محفوظة © 2024</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Google Sheets configuration
+        const STUDENTS_SHEET_ID = '1d2ddgJc0unpLFKQtMuadyUMaHfVIh3gLRb3_613JGqE';
+        const STUDENTS_SHEET_GID = '254150448'; // The specific sheet GID from your URL
+        
+        // Teachers Google Sheet configuration
+        const TEACHERS_SHEET_ID = '1hg0ZNWB6Zq35RALOZN8S_1ysaN2MajcsKkBDtopWwaA';
+        const TEACHERS_SHEET_GID = '1627034040'; // Sheet: غياب الترم الأول
+        
+        // Cache for data
+        let studentsData = [];
+        let teachersData = [];
+        let studentsDataLoaded = false;
+        let teachersDataLoaded = false;
+        
+        // Google Apps Script Web App URL for updating passwords and registrations
+        const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxYourScriptIdHere/exec';
+        
+        // Registration Google Sheet configuration
+        const REGISTRATION_SHEET_ID = '1d2ddgJc0unpLFKQtMuadyUMaHfVIh3gLRb3_613JGqE'; // Same as students sheet for now
+        const REGISTRATION_SHEET_NAME = 'طلبات التسجيل'; // New sheet for registration requests
+        
+        // Function to update password in Google Sheets
+        async function updatePasswordInSheet(teacherCode, newPassword) {
+            try {
+                const teacher = findTeacherByCode(teacherCode);
+                if (!teacher) {
+                    throw new Error('لم يتم العثور على الخادم');
+                }
+
+                console.log(`🔄 تحديث كلمة المرور للخادم ${teacherCode} في الصف ${teacher.rowIndex}`);
+
+                // Method 1: Try to update via Google Apps Script (if available)
+                try {
+                    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'updatePassword',
+                            sheetId: TEACHERS_SHEET_ID,
+                            sheetName: 'غياب الترم الأول',
+                            row: teacher.rowIndex,
+                            column: 6, // Column F
+                            password: newPassword,
+                            teacherCode: teacherCode
+                        })
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            console.log('✅ تم تحديث كلمة المرور في جوجل شيت بنجاح');
+                            teacher.password = newPassword;
+                            return true;
+                        }
+                    }
+                } catch (scriptError) {
+                    console.log('⚠️ Google Apps Script غير متاح، استخدام الطريقة البديلة');
+                }
+
+                // Method 2: Alternative approach using Google Sheets API (requires API key)
+                // This is a fallback method that shows the user how to manually update
+                
+                // Update local data immediately for user experience
+                teacher.password = newPassword;
+                
+                // Show instructions to user for manual update
+                const instructions = `
+                    📋 تعليمات تحديث كلمة المرور في جوجل شيت:
+                    
+                    1️⃣ افتح الرابط التالي:
+                    https://docs.google.com/spreadsheets/d/${TEACHERS_SHEET_ID}/edit
+                    
+                    2️⃣ ابحث عن الصف الخاص بالخادم: ${teacher.name} (كود: ${teacherCode})
+                    
+                    3️⃣ في العمود F (كلمة المرور)، اكتب: ${newPassword}
+                    
+                    4️⃣ اضغط Enter لحفظ التغيير
+                    
+                    ✅ سيتم تحديث كلمة المرور تلقائياً في النظام
+                `;
+                
+                // Create a detailed modal with instructions
+                setTimeout(() => {
+                    showPasswordUpdateInstructions(teacherCode, newPassword, teacher.name, instructions);
+                }, 1000);
+                
+                console.log('✅ تم تحديث كلمة المرور محلياً - يتطلب تحديث يدوي في الشيت');
+                return true;
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحديث كلمة المرور:', error);
+                return false;
+            }
+        }
+        
+        // Function to show password update instructions
+        function showPasswordUpdateInstructions(teacherCode, newPassword, teacherName, instructions) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-2xl mx-auto card-shadow max-h-96 overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <div class="text-4xl mb-4">🔐</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">تم تحديث كلمة المرور محلياً</h3>
+                        <p class="text-gray-600">لحفظ التغيير نهائياً في جوجل شيت، يرجى اتباع الخطوات التالية:</p>
+                    </div>
+                    
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6 text-right" dir="rtl">
+                        <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">${instructions}</pre>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <h4 class="font-bold text-blue-800 mb-2">📝 معلومات التحديث:</h4>
+                        <div class="text-sm text-blue-700 space-y-1">
+                            <p><strong>اسم الخادم:</strong> ${teacherName}</p>
+                            <p><strong>كود الخادم:</strong> ${teacherCode}</p>
+                            <p><strong>كلمة المرور الجديدة:</strong> <span class="bg-yellow-100 px-2 py-1 rounded font-mono">${newPassword}</span></p>
+                            <p><strong>العمود المطلوب:</strong> F (كلمة المرور)</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="window.open('https://docs.google.com/spreadsheets/d/${TEACHERS_SHEET_ID}/edit', '_blank')" class="flex-1 bg-green-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-green-700 transition-colors">
+                            🔗 فتح جوجل شيت
+                        </button>
+                        <button onclick="copyToClipboard('${newPassword}')" class="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            📋 نسخ كلمة المرور
+                        </button>
+                        <button onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                            إغلاق
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 text-center">
+                        <p class="text-xs text-gray-500">💡 نصيحة: احتفظ بهذه النافذة مفتوحة أثناء تحديث الشيت</p>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+        
+        // Function to copy text to clipboard
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showCustomModal('تم النسخ!', 'تم نسخ كلمة المرور إلى الحافظة', 'success');
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showCustomModal('تم النسخ!', 'تم نسخ كلمة المرور إلى الحافظة', 'success');
+            });
+        }
+        
+        // Function to fetch students data from Google Sheets
+        async function fetchStudentsData() {
+            try {
+                // Using the CSV export URL for public Google Sheets
+                const csvUrl = `https://docs.google.com/spreadsheets/d/${STUDENTS_SHEET_ID}/export?format=csv&gid=${STUDENTS_SHEET_GID}`;
+                
+                const response = await fetch(csvUrl);
+                const csvText = await response.text();
+                
+                // Parse CSV data
+                const rows = csvText.split('\n').filter(row => row.trim());
+                const headers = rows[0].split(',').map(header => header.replace(/"/g, '').trim());
+                
+                studentsData = [];
+                
+                for (let i = 1; i < rows.length; i++) {
+                    const values = parseCSVRow(rows[i]);
+                    
+                    if (values.length >= 13 && values[0]) { // Ensure we have all required columns
+                        const student = {
+                            code: values[0].trim(),
+                            name: values[1].trim(),
+                            stage: values[2].trim(),
+                            phone: values[3].trim(),
+                            classroom: values[4].trim(),
+                            liturgy: parseFloat(values[5]) || 0,
+                            memorization: parseFloat(values[6]) || 0,
+                            coptic: parseFloat(values[7]) || 0,
+                            hymns: parseFloat(values[8]) || 0,
+                            total: parseFloat(values[9]) || 0,
+                            percentage: parseFloat(values[10]) || 0,
+                            finalResult: values[11].trim(),
+                            finalResultText: values[12].trim()
+                        };
+                        
+                        studentsData.push(student);
+                    }
+                }
+                
+                studentsDataLoaded = true;
+                console.log(`تم تحميل بيانات ${studentsData.length} دارس من جوجل شيت`);
+                return true;
+                
+            } catch (error) {
+                console.error('خطأ في تحميل بيانات الطلاب من جوجل شيت:', error);
+                
+                // Fallback to sample data if Google Sheets fails
+                studentsData = [
+                    {
+                        code: 'ST001',
+                        name: 'مينا جورج فهيم',
+                        stage: 'السنة الأولى',
+                        phone: '01234567890',
+                        classroom: 'الفصل الأول',
+                        liturgy: 85,
+                        memorization: 88,
+                        coptic: 78,
+                        hymns: 82,
+                        total: 333,
+                        percentage: 83.25,
+                        finalResult: 'جيد جداً',
+                        finalResultText: 'جيد جداً'
+                    },
+                    {
+                        code: 'ST002',
+                        name: 'مريم سمير عبدالله',
+                        stage: 'السنة الأولى',
+                        phone: '01234567891',
+                        classroom: 'الفصل الأول',
+                        liturgy: 92,
+                        memorization: 90,
+                        coptic: 88,
+                        hymns: 90,
+                        total: 360,
+                        percentage: 90.0,
+                        finalResult: 'ممتاز',
+                        finalResultText: 'ممتاز'
+                    }
+                ];
+                
+                studentsDataLoaded = true;
+                return false;
+            }
+        }
+
+        // Function to fetch teachers data from Google Sheets
+        async function fetchTeachersData() {
+            try {
+                console.log('🔄 بدء تحميل بيانات الخدام من جوجل شيت...');
+                console.log('📋 معرف الشيت:', TEACHERS_SHEET_ID);
+                
+                // Try multiple GIDs to find the correct sheet with teachers data
+                const possibleGIDs = [
+                    '1627034040',  // غياب الترم الأول (main sheet)
+                    '0',           // Default sheet
+                    '254150448',   // Alternative sheet
+                    '1',           // Second sheet
+                    '2',           // Third sheet
+                    null           // No GID (default)
+                ];
+                
+                let csvText = null;
+                let successfulUrl = null;
+                
+                for (const gid of possibleGIDs) {
+                    try {
+                        const csvUrl = gid ? 
+                            `https://docs.google.com/spreadsheets/d/${TEACHERS_SHEET_ID}/export?format=csv&gid=${gid}` :
+                            `https://docs.google.com/spreadsheets/d/${TEACHERS_SHEET_ID}/export?format=csv`;
+                        
+                        console.log(`🔗 محاولة مع GID: ${gid || 'default'} - ${csvUrl}`);
+                        
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 8000);
+                        
+                        const response = await fetch(csvUrl, {
+                            signal: controller.signal,
+                            headers: {
+                                'Accept': 'text/csv,text/plain,*/*',
+                                'Cache-Control': 'no-cache'
+                            }
+                        });
+                        
+                        clearTimeout(timeoutId);
+                        console.log(`📡 حالة الاستجابة لـ GID ${gid}:`, response.status, response.statusText);
+                        
+                        if (response.ok) {
+                            const text = await response.text();
+                            
+                            // Check if we got valid CSV data
+                            if (!text.includes('<html') && !text.includes('<!DOCTYPE') && text.trim()) {
+                                // Check if this looks like teachers data by examining the content
+                                const lines = text.split('\n').filter(line => line.trim());
+                                if (lines.length > 1) {
+                                    // Look for teacher-like data patterns
+                                    const sampleData = lines.slice(0, 5).join('\n').toLowerCase();
+                                    
+                                    // If it contains teacher codes or names, use this sheet
+                                    if (sampleData.includes('fz64sz56') || 
+                                        sampleData.includes('خادم') || 
+                                        sampleData.includes('إداري') ||
+                                        sampleData.includes('مشرف') ||
+                                        lines[0].includes('كود') ||
+                                        lines[0].includes('اسم')) {
+                                        csvText = text;
+                                        successfulUrl = csvUrl;
+                                        console.log(`✅ تم العثور على بيانات الخدام في GID: ${gid}`);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        console.log(`❌ فشل GID ${gid}:`, error.message);
+                        continue;
+                    }
+                }
+                
+                if (!csvText) {
+                    throw new Error('لم يتم العثور على شيت يحتوي على بيانات الخدام');
+                }
+                
+                console.log('📝 تم تحميل النص الخام من:', successfulUrl);
+                console.log('📝 طول النص:', csvText.length);
+                console.log('📝 أول 300 حرف:', csvText.substring(0, 300));
+                
+                // Parse CSV data
+                const rows = csvText.split('\n').filter(row => row.trim());
+                console.log('📊 عدد الصفوف:', rows.length);
+                
+                if (rows.length === 0) {
+                    throw new Error('لا توجد بيانات في الشيت');
+                }
+                
+                if (rows.length === 1) {
+                    throw new Error('يوجد عناوين فقط بدون بيانات');
+                }
+                
+                const headers = rows[0].split(',').map(header => header.replace(/"/g, '').trim());
+                console.log('📋 العناوين:', headers);
+                
+                teachersData = [];
+                
+                // Look for the correct columns
+                let nameColumnIndex = -1;
+                let codeColumnIndex = -1;
+                let passwordColumnIndex = -1;
+                
+                // Try to identify columns by their headers
+                headers.forEach((header, index) => {
+                    const headerLower = header.toLowerCase();
+                    if (headerLower.includes('اسم') || headerLower.includes('name')) {
+                        nameColumnIndex = index;
+                    }
+                    if (headerLower.includes('كود') || headerLower.includes('code') || index === 0) {
+                        codeColumnIndex = index;
+                    }
+                    if (headerLower.includes('كلمة المرور') || headerLower.includes('password') || headerLower.includes('كلمه المرور')) {
+                        passwordColumnIndex = index;
+                    }
+                });
+                
+                // If we can't find proper headers, assume first column is code, second is name, sixth is password
+                if (codeColumnIndex === -1) codeColumnIndex = 0;
+                if (nameColumnIndex === -1) nameColumnIndex = 1;
+                if (passwordColumnIndex === -1) passwordColumnIndex = 5; // Column F (0-indexed)
+                
+                console.log(`📍 عمود الكود: ${codeColumnIndex}, عمود الاسم: ${nameColumnIndex}, عمود كلمة المرور: ${passwordColumnIndex}`);
+                
+                for (let i = 1; i < rows.length; i++) {
+                    const values = parseCSVRow(rows[i]);
+                    console.log(`📝 الصف ${i}:`, values);
+                    
+                    if (values.length > Math.max(codeColumnIndex, nameColumnIndex) && 
+                        values[codeColumnIndex] && values[codeColumnIndex].trim()) {
+                        
+                        // Determine permission level based on available columns
+                        let permissionLevel = 'خادم'; // Default level
+                        
+                        // Check different possible positions for admin column
+                        // Look for permission indicators in any column
+                        for (let j = 0; j < values.length; j++) {
+                            if (values[j]) {
+                                const cellValue = values[j].trim().toLowerCase();
+                                if (cellValue === 'نعم' || cellValue === 'yes' || cellValue === '1' || 
+                                    cellValue === 'إداري' || cellValue === 'اداري' || cellValue === 'admin' ||
+                                    cellValue.includes('إداري') || cellValue.includes('admin')) {
+                                    permissionLevel = 'إداري';
+                                    break;
+                                } else if (cellValue === 'مشرف' || cellValue === 'supervisor' || 
+                                          cellValue.includes('مشرف') || cellValue.includes('supervisor')) {
+                                    permissionLevel = 'مشرف';
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        // Get password from column F or use default
+                        const storedPassword = values[passwordColumnIndex] && values[passwordColumnIndex].trim() ? 
+                                             values[passwordColumnIndex].trim() : '123456';
+                        
+                        const teacher = {
+                            id: i.toString(),
+                            rowIndex: i + 1, // Row number in Google Sheets (1-indexed)
+                            code: values[codeColumnIndex].trim().toUpperCase(),
+                            name: values[nameColumnIndex] ? values[nameColumnIndex].trim() : 'غير محدد',
+                            phone: values[2] && values[2] !== values[nameColumnIndex] ? values[2].trim() : '',
+                            specialization: values[3] && values[3] !== values[nameColumnIndex] ? values[3].trim() : '',
+                            password: storedPassword,
+                            permissionLevel: permissionLevel,
+                            isAdmin: permissionLevel === 'إداري',
+                            isSupervisor: permissionLevel === 'مشرف' || permissionLevel === 'إداري'
+                        };
+                        
+                        console.log(`👤 تم إضافة خادم:`, teacher);
+                        teachersData.push(teacher);
+                    } else {
+                        console.log(`⚠️ تم تجاهل الصف ${i} - بيانات ناقصة:`, values);
+                    }
+                }
+                
+                teachersDataLoaded = true;
+                console.log(`✅ تم تحميل بيانات ${teachersData.length} خادم من جوجل شيت بنجاح`);
+                console.log('👥 قائمة الخدام المحملة:', teachersData.map(t => `${t.code} - ${t.name}`));
+                return true;
+                
+            } catch (error) {
+                console.error('❌ خطأ في تحميل بيانات الخدام من جوجل شيت:', error);
+                console.error('📋 تفاصيل الخطأ:', error.message);
+                
+                // Fallback to sample data if Google Sheets fails
+                console.log('🔄 استخدام البيانات التجريبية...');
+                teachersData = [
+                    {
+                        id: '1',
+                        rowIndex: 2,
+                        code: 'FZ64SZ56',
+                        name: 'أبونا يوسف',
+                        phone: '01234567890',
+                        specialization: 'الطقوس الكنسية',
+                        password: '123456',
+                        permissionLevel: 'إداري',
+                        isAdmin: true,
+                        isSupervisor: true
+                    },
+                    {
+                        id: '2',
+                        rowIndex: 3,
+                        code: 'T002',
+                        name: 'الشماس مينا',
+                        phone: '01234567891',
+                        specialization: 'الألحان القبطية',
+                        password: '123456',
+                        permissionLevel: 'خادم',
+                        isAdmin: false,
+                        isSupervisor: false
+                    },
+                    {
+                        id: '3',
+                        rowIndex: 4,
+                        code: 'ADMIN',
+                        name: 'المدير العام',
+                        phone: '01234567892',
+                        specialization: 'الإدارة العامة',
+                        password: '123456',
+                        permissionLevel: 'إداري',
+                        isAdmin: true,
+                        isSupervisor: true
+                    }
+                ];
+                
+                teachersDataLoaded = true;
+                console.log('✅ تم تحميل البيانات التجريبية:', teachersData.map(t => `${t.code} - ${t.name}`));
+                return false;
+            }
+        }
+        
+        // Helper function to parse CSV row properly handling commas in quoted fields
+        function parseCSVRow(row) {
+            const result = [];
+            let current = '';
+            let inQuotes = false;
+            
+            for (let i = 0; i < row.length; i++) {
+                const char = row[i];
+                
+                if (char === '"') {
+                    inQuotes = !inQuotes;
+                } else if (char === ',' && !inQuotes) {
+                    result.push(current);
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            
+            result.push(current); // Add the last field
+            return result;
+        }
+
+        let currentUser = null;
+        let currentTab = 'student';
+
+        // Navigation functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Update navigation
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Generate reports when reports section is shown
+            if (sectionId === 'reports' && studentsDataLoaded) {
+                generateReports();
+            }
+        }
+
+        // Login functions
+        function switchTab(tab) {
+            currentTab = tab;
+            
+            // Update tab appearance
+            document.getElementById('studentTab').className = tab === 'student' 
+                ? 'flex-1 py-3 px-4 text-center font-semibold text-yellow-600 border-b-2 border-yellow-600'
+                : 'flex-1 py-3 px-4 text-center font-semibold text-gray-500';
+                
+            document.getElementById('teacherTab').className = tab === 'teacher' 
+                ? 'flex-1 py-3 px-4 text-center font-semibold text-yellow-600 border-b-2 border-yellow-600'
+                : 'flex-1 py-3 px-4 text-center font-semibold text-gray-500';
+            
+            // Show/hide login forms
+            if (tab === 'student') {
+                document.getElementById('studentLogin').classList.remove('hidden');
+                document.getElementById('teacherLogin').classList.add('hidden');
+            } else {
+                document.getElementById('studentLogin').classList.add('hidden');
+                document.getElementById('teacherLogin').classList.remove('hidden');
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            if (currentTab === 'student') {
+                const code = document.getElementById('studentCode').value.trim().toUpperCase();
+                if (code) {
+                    // Load data from Google Sheets if not already loaded
+                    if (!studentsDataLoaded) {
+                        showCustomModal('جاري التحميل...', 'يتم تحميل بيانات الطلاب من جوجل شيت', 'info');
+                        await fetchStudentsData();
+                    }
+                    
+                    const student = findStudentByCode(code);
+                    if (student) {
+                        currentUser = { type: 'student', code: code, data: student };
+                        showStudentProfile(code);
+                        showCustomModal('تم تسجيل الدخول بنجاح!', `مرحباً بك ${student.name}. يمكنك الآن مشاهدة نتائجك في الملف الشخصي.`, 'success');
+                        document.getElementById('studentCode').value = '';
+                    } else {
+                        showCustomModal('خطأ في تسجيل الدخول', 'كود الدارس غير صحيح', 'error');
+                    }
+                } else {
+                    showCustomModal('خطأ', 'يرجى إدخال كود الطالب', 'error');
+                }
+            } else {
+                const teacherCode = document.getElementById('teacherUsername').value.trim();
+                const password = document.getElementById('teacherPassword').value.trim();
+                
+                console.log(`🔐 محاولة تسجيل دخول خادم - الكود: ${teacherCode}`);
+                
+                if (teacherCode && password) {
+                    // Load teachers data from Google Sheets if not already loaded
+                    if (!teachersDataLoaded) {
+                        console.log('📥 تحميل بيانات الخدام...');
+                        showCustomModal('جاري التحميل...', 'يتم تحميل بيانات الخدام من جوجل شيت', 'info');
+                        await fetchTeachersData();
+                    }
+                    
+                    console.log(`📊 عدد الخدام المحملين: ${teachersData.length}`);
+                    const teacher = findTeacherByCode(teacherCode);
+                    
+                    // Check password from Google Sheets or default
+                    if (teacher && password === teacher.password) {
+                        console.log('✅ تم تسجيل الدخول بنجاح');
+                        currentUser = { 
+                            type: 'teacher', 
+                            code: teacherCode, 
+                            data: teacher,
+                            isAdmin: teacher.isAdmin
+                        };
+                        showTeacherDashboard(teacher);
+                        showCustomModal('تم تسجيل الدخول بنجاح!', `مرحباً بك ${teacher.name} (${teacher.permissionLevel}) في لوحة تحكم الخادم`, 'success');
+                        document.getElementById('teacherUsername').value = '';
+                        document.getElementById('teacherPassword').value = '';
+                    } else if (!teacher) {
+                        console.log('❌ كود الخادم غير موجود');
+                        console.log('📋 الأكواد المتاحة:', teachersData.map(t => t.code).join(', '));
+                        showCustomModal('خطأ في تسجيل الدخول', `كود الخادم "${teacherCode}" غير صحيح. الأكواد المتاحة: ${teachersData.map(t => t.code).join(', ')}`, 'error');
+                    } else {
+                        console.log('❌ كلمة المرور غير صحيحة');
+                        showCustomModal('خطأ في تسجيل الدخول', 'كلمة المرور غير صحيحة', 'error');
+                    }
+                } else {
+                    showCustomModal('خطأ', 'يرجى إدخال كود الخادم وكلمة المرور', 'error');
+                }
+            }
+        }
+
+        function logout() {
+            currentUser = null;
+            
+            // Hide reports navigation for non-teachers
+            const reportsNavButton = document.getElementById('reportsNavButton');
+            if (reportsNavButton) {
+                reportsNavButton.classList.add('hidden');
+            }
+            
+            showSection('home');
+            showCustomModal('تم تسجيل الخروج', 'شكراً لاستخدام النظام', 'success');
+        }
+
+        function showTeacherDashboard(teacher) {
+            showSection('teacherDashboard');
+            
+            // Show reports navigation for teachers
+            const reportsNavButton = document.getElementById('reportsNavButton');
+            if (reportsNavButton) {
+                reportsNavButton.classList.remove('hidden');
+            }
+            
+            // Update dashboard header with teacher info
+            const dashboardHeader = document.querySelector('#teacherDashboard h2');
+            const permissionBadge = teacher.permissionLevel === 'إداري' ? 
+                '<span class="inline-block bg-red-100 text-red-800 px-3 py-1 rounded-full text-sm font-semibold">إداري</span>' :
+                teacher.permissionLevel === 'مشرف' ? 
+                '<span class="inline-block bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-sm font-semibold">مشرف</span>' :
+                '<span class="inline-block bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">خادم</span>';
+                
+            dashboardHeader.innerHTML = `
+                <div class="flex items-center gap-4">
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800">لوحة تحكم الخادم</h2>
+                        <p class="text-lg text-gray-600">مرحباً ${teacher.name} - ${teacher.specialization}</p>
+                        ${permissionBadge}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Helper functions to find data
+        function findStudentByCode(code) {
+            const student = studentsData.find(student => student.code === code);
+            console.log(`🔍 البحث عن طالب بالكود ${code}:`, student ? 'موجود' : 'غير موجود');
+            return student;
+        }
+        
+        function findTeacherByCode(code) {
+            const upperCode = code.toUpperCase(); // Convert search code to uppercase
+            console.log(`🔍 البحث عن خادم بالكود ${code} (${upperCode})`);
+            console.log('📋 قائمة الخدام المتاحة:', teachersData.map(t => t.code));
+            
+            const teacher = teachersData.find(teacher => teacher.code === upperCode);
+            console.log(`👤 نتيجة البحث:`, teacher ? `موجود - ${teacher.name}` : 'غير موجود');
+            return teacher;
+        }
+        
+        function showStudentProfile(studentCode) {
+            const student = findStudentByCode(studentCode);
+            if (!student) return;
+            
+            const profileContent = document.getElementById('profileContent');
+            
+            profileContent.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gradient-to-br from-yellow-50 to-red-50 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">البيانات الشخصية</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">الاسم الكامل:</span>
+                                <span class="font-semibold">${student.name}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">كود الدارس:</span>
+                                <span class="font-semibold text-yellow-700">${student.code}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">المرحلة الدراسية:</span>
+                                <span class="font-semibold">${student.stage}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">الفصل:</span>
+                                <span class="font-semibold">${student.classroom}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">رقم الهاتف:</span>
+                                <span class="font-semibold" dir="ltr">${student.phone}</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-yellow-50 to-red-50 border-2 border-yellow-200 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                            🏆 نتائج الفصل الدراسي الأول
+                        </h3>
+                        
+                        <!-- Overall Result Card -->
+                        <div class="bg-white rounded-lg p-4 mb-6 border-2 ${student.finalResult === 'ممتاز' ? 'border-green-300 bg-green-50' : student.finalResult === 'جيد جداً' ? 'border-blue-300 bg-blue-50' : 'border-yellow-300 bg-yellow-50'}">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2">${student.finalResult === 'ممتاز' ? '🥇' : student.finalResult === 'جيد جداً' ? '🥈' : '🥉'}</div>
+                                <h4 class="text-2xl font-bold ${student.finalResult === 'ممتاز' ? 'text-green-800' : student.finalResult === 'جيد جداً' ? 'text-blue-800' : 'text-yellow-800'} mb-2">${student.finalResult}</h4>
+                                <p class="text-lg font-semibold text-gray-700">النسبة: ${student.percentage}%</p>
+                                <p class="text-lg font-semibold text-gray-700">المجموع: ${student.total}/400</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Detailed Grades -->
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-gray-700 mb-3">تفاصيل الدرجات:</h4>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-white rounded-lg p-4 border border-red-200">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold text-red-800">⛪ الطقوس الكنسية</span>
+                                        <span class="text-2xl font-bold text-red-600">${student.liturgy}</span>
+                                    </div>
+                                    <div class="w-full bg-red-100 rounded-full h-2">
+                                        <div class="bg-red-500 h-2 rounded-full" style="width: ${student.liturgy}%"></div>
+                                    </div>
+                                    <p class="text-sm text-red-600 mt-1">${student.liturgy}/100</p>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-4 border border-blue-200">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold text-blue-800">📖 المحفوظات والأجبية</span>
+                                        <span class="text-2xl font-bold text-blue-600">${student.memorization}</span>
+                                    </div>
+                                    <div class="w-full bg-blue-100 rounded-full h-2">
+                                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${student.memorization}%"></div>
+                                    </div>
+                                    <p class="text-sm text-blue-600 mt-1">${student.memorization}/100</p>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-4 border border-green-200">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold text-green-800">🔤 اللغة القبطية</span>
+                                        <span class="text-2xl font-bold text-green-600">${student.coptic}</span>
+                                    </div>
+                                    <div class="w-full bg-green-100 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: ${student.coptic}%"></div>
+                                    </div>
+                                    <p class="text-sm text-green-600 mt-1">${student.coptic}/100</p>
+                                </div>
+                                
+                                <div class="bg-white rounded-lg p-4 border border-purple-200">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold text-purple-800">🎵 الألحان والتسبحة</span>
+                                        <span class="text-2xl font-bold text-purple-600">${student.hymns}</span>
+                                    </div>
+                                    <div class="w-full bg-purple-100 rounded-full h-2">
+                                        <div class="bg-purple-500 h-2 rounded-full" style="width: ${student.hymns}%"></div>
+                                    </div>
+                                    <p class="text-sm text-purple-600 mt-1">${student.hymns}/100</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <h3 class="text-lg font-bold text-blue-800 mb-3">📊 تحليل الأداء</h3>
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">نقاط القوة:</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                ${getStrengths(student).map(strength => `<li>• ${strength}</li>`).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-gray-700 mb-2">مجالات التحسين:</h4>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                ${getImprovementAreas(student).map(area => `<li>• ${area}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showSection('studentProfile');
+        }
+        
+        function getStrengths(student) {
+            const subjects = [
+                { name: 'الطقوس الكنسية', score: student.liturgy },
+                { name: 'المحفوظات والأجبية', score: student.memorization },
+                { name: 'اللغة القبطية', score: student.coptic },
+                { name: 'الألحان والتسبحة', score: student.hymns }
+            ];
+            
+            return subjects
+                .filter(subject => subject.score >= 85)
+                .map(subject => `${subject.name} (${subject.score}/100)`)
+                .slice(0, 2);
+        }
+        
+        function getImprovementAreas(student) {
+            const subjects = [
+                { name: 'الطقوس الكنسية', score: student.liturgy },
+                { name: 'المحفوظات والأجبية', score: student.memorization },
+                { name: 'اللغة القبطية', score: student.coptic },
+                { name: 'الألحان والتسبحة', score: student.hymns }
+            ];
+            
+            const improvements = subjects
+                .filter(subject => subject.score < 85)
+                .map(subject => `${subject.name} (${subject.score}/100)`);
+                
+            return improvements.length > 0 ? improvements : ['استمر في الأداء الممتاز'];
+        }
+        
+        // Reports and Analytics Functions
+        function generateReports() {
+            if (!studentsDataLoaded) {
+                showCustomModal('تحميل البيانات', 'جاري تحميل بيانات الطلاب...', 'info');
+                return;
+            }
+
+            // Calculate statistics
+            const stats = calculateStatistics();
+            
+            // Update summary cards
+            document.getElementById('totalStudents').textContent = stats.totalStudents;
+            document.getElementById('excellentStudents').textContent = stats.excellentCount;
+            document.getElementById('veryGoodStudents').textContent = stats.veryGoodCount;
+            document.getElementById('averageScore').textContent = stats.averagePercentage + '%';
+            
+            // Generate charts
+            generateGradeChart(stats.gradeDistribution);
+            generateSubjectChart(stats.subjectAverages);
+            generateStagePerformance(stats.stagePerformance);
+            generateTopPerformers(stats.topPerformers);
+        }
+
+        function calculateStatistics() {
+            const totalStudents = studentsData.length;
+            let excellentCount = 0;
+            let veryGoodCount = 0;
+            let goodCount = 0;
+            let totalPercentage = 0;
+            
+            const subjectTotals = {
+                liturgy: 0,
+                memorization: 0,
+                coptic: 0,
+                hymns: 0
+            };
+            
+            const stageStats = {};
+            
+            studentsData.forEach(student => {
+                // Count grade distribution
+                if (student.finalResult === 'ممتاز') excellentCount++;
+                else if (student.finalResult === 'جيد جداً') veryGoodCount++;
+                else goodCount++;
+                
+                // Sum percentages
+                totalPercentage += student.percentage;
+                
+                // Sum subject scores
+                subjectTotals.liturgy += student.liturgy;
+                subjectTotals.memorization += student.memorization;
+                subjectTotals.coptic += student.coptic;
+                subjectTotals.hymns += student.hymns;
+                
+                // Stage statistics
+                if (!stageStats[student.stage]) {
+                    stageStats[student.stage] = { count: 0, totalPercentage: 0 };
+                }
+                stageStats[student.stage].count++;
+                stageStats[student.stage].totalPercentage += student.percentage;
+            });
+            
+            return {
+                totalStudents,
+                excellentCount,
+                veryGoodCount,
+                goodCount,
+                averagePercentage: Math.round(totalPercentage / totalStudents),
+                gradeDistribution: {
+                    excellent: excellentCount,
+                    veryGood: veryGoodCount,
+                    good: goodCount
+                },
+                subjectAverages: {
+                    liturgy: Math.round(subjectTotals.liturgy / totalStudents),
+                    memorization: Math.round(subjectTotals.memorization / totalStudents),
+                    coptic: Math.round(subjectTotals.coptic / totalStudents),
+                    hymns: Math.round(subjectTotals.hymns / totalStudents)
+                },
+                stagePerformance: Object.keys(stageStats).map(stage => ({
+                    stage,
+                    count: stageStats[stage].count,
+                    average: Math.round(stageStats[stage].totalPercentage / stageStats[stage].count)
+                })),
+                topPerformers: studentsData
+                    .sort((a, b) => b.percentage - a.percentage)
+                    .slice(0, 10)
+            };
+        }
+
+        function generateGradeChart(distribution) {
+            const total = distribution.excellent + distribution.veryGood + distribution.good;
+            const chartElement = document.getElementById('gradeChart');
+            
+            chartElement.innerHTML = `
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-green-700 font-semibold">ممتاز</span>
+                        <span class="text-green-600">${distribution.excellent} (${Math.round(distribution.excellent/total*100)}%)</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-green-500 h-3 rounded-full" style="width: ${distribution.excellent/total*100}%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-700 font-semibold">جيد جداً</span>
+                        <span class="text-blue-600">${distribution.veryGood} (${Math.round(distribution.veryGood/total*100)}%)</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-blue-500 h-3 rounded-full" style="width: ${distribution.veryGood/total*100}%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-yellow-700 font-semibold">جيد</span>
+                        <span class="text-yellow-600">${distribution.good} (${Math.round(distribution.good/total*100)}%)</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-yellow-500 h-3 rounded-full" style="width: ${distribution.good/total*100}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateSubjectChart(averages) {
+            const chartElement = document.getElementById('subjectChart');
+            
+            chartElement.innerHTML = `
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between">
+                        <span class="text-red-700 font-semibold">⛪ الطقوس الكنسية</span>
+                        <span class="text-red-600 font-bold">${averages.liturgy}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-red-500 h-3 rounded-full" style="width: ${averages.liturgy}%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-blue-700 font-semibold">📖 المحفوظات والأجبية</span>
+                        <span class="text-blue-600 font-bold">${averages.memorization}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-blue-500 h-3 rounded-full" style="width: ${averages.memorization}%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-green-700 font-semibold">🔤 اللغة القبطية</span>
+                        <span class="text-green-600 font-bold">${averages.coptic}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-green-500 h-3 rounded-full" style="width: ${averages.coptic}%"></div>
+                    </div>
+                    
+                    <div class="flex items-center justify-between">
+                        <span class="text-purple-700 font-semibold">🎵 الألحان والتسبحة</span>
+                        <span class="text-purple-600 font-bold">${averages.hymns}%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-purple-500 h-3 rounded-full" style="width: ${averages.hymns}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateStagePerformance(stageData) {
+            const stageElement = document.getElementById('stagePerformance');
+            
+            stageElement.innerHTML = stageData.map(stage => `
+                <div class="bg-white rounded-lg p-4 border border-gray-200">
+                    <h4 class="font-bold text-gray-800 mb-2">${stage.stage}</h4>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-blue-600 mb-1">${stage.average}%</div>
+                        <div class="text-sm text-gray-600">${stage.count} دارس</div>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-3">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${stage.average}%"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function generateTopPerformers(topStudents) {
+            const topElement = document.getElementById('topPerformers');
+            
+            topElement.innerHTML = topStudents.map((student, index) => `
+                <div class="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center font-bold text-white ${
+                            index === 0 ? 'bg-yellow-500' : 
+                            index === 1 ? 'bg-gray-400' : 
+                            index === 2 ? 'bg-yellow-600' : 'bg-blue-500'
+                        }">
+                            ${index + 1}
+                        </div>
+                        <div>
+                            <div class="font-semibold text-gray-800">${student.name}</div>
+                            <div class="text-sm text-gray-600">${student.stage}</div>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <div class="font-bold text-lg ${
+                            student.finalResult === 'ممتاز' ? 'text-green-600' : 
+                            student.finalResult === 'جيد جداً' ? 'text-blue-600' : 'text-yellow-600'
+                        }">${student.percentage}%</div>
+                        <div class="text-sm text-gray-600">${student.finalResult}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Function to show registration form
+        function showRegistrationForm() {
+            showSection('studentRegistration');
+        }
+        
+        // Function to handle student registration
+        async function handleStudentRegistration(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('studentName').value.trim(),
+                gender: document.getElementById('gender').value,
+                phone: document.getElementById('studentPhone').value.trim(),
+                parentPhone: document.getElementById('parentPhone').value.trim(),
+                birthDate: document.getElementById('birthDate').value,
+                desiredStage: document.getElementById('desiredStage').value,
+                deaconDegree: document.getElementById('deaconDegree').value,
+                address: document.getElementById('studentAddress').value.trim(),
+                notes: document.getElementById('registrationNotes').value.trim(),
+                registrationDate: new Date().toLocaleDateString('ar-EG'),
+                registrationTime: new Date().toLocaleTimeString('ar-EG'),
+                status: 'قيد المراجعة'
+            };
+            
+            // Validate required fields
+            if (!formData.name || !formData.gender || !formData.phone || !formData.birthDate || !formData.desiredStage || !formData.address) {
+                showCustomModal('خطأ في البيانات', 'يرجى ملء جميع الحقول المطلوبة المميزة بعلامة *', 'error');
+                return;
+            }
+            
+            // Validate phone number
+            if (!/^[0-9]{11}$/.test(formData.phone)) {
+                showCustomModal('خطأ في رقم الهاتف', 'يرجى إدخال رقم هاتف صحيح مكون من 11 رقم', 'error');
+                return;
+            }
+            
+            // Validate parent phone if provided
+            if (formData.parentPhone && !/^[0-9]{11}$/.test(formData.parentPhone)) {
+                showCustomModal('خطأ في رقم هاتف ولي الأمر', 'يرجى إدخال رقم هاتف صحيح مكون من 11 رقم أو تركه فارغاً', 'error');
+                return;
+            }
+            
+            try {
+                // Show loading message
+                showCustomModal('جاري الإرسال...', 'يتم إرسال طلب التسجيل إلى قاعدة البيانات', 'info');
+                
+                // Try to submit to Google Sheets
+                const success = await submitRegistrationToSheet(formData);
+                
+                if (success) {
+                    // Clear form
+                    document.getElementById('registrationForm').reset();
+                    
+                    // Show success message
+                    showCustomModal(
+                        'تم إرسال طلب التسجيل بنجاح! 🎉', 
+                        `شكراً لك ${formData.name}! تم استلام طلب التسجيل وسيتم مراجعته من قبل الخدام. سنتواصل معك خلال 24-48 ساعة على رقم ${formData.phone} لتأكيد التسجيل وإعطائك كود الدارس.`, 
+                        'success'
+                    );
+                    
+                    // Return to news section after 3 seconds
+                    setTimeout(() => {
+                        showSection('news');
+                    }, 3000);
+                    
+                } else {
+                    // Show fallback instructions
+                    showRegistrationFallbackInstructions(formData);
+                }
+                
+            } catch (error) {
+                console.error('خطأ في إرسال طلب التسجيل:', error);
+                showRegistrationFallbackInstructions(formData);
+            }
+        }
+        
+        // Function to submit registration to Google Sheets
+        async function submitRegistrationToSheet(formData) {
+            try {
+                // Method 1: Try Google Apps Script
+                try {
+                    const response = await fetch(GOOGLE_APPS_SCRIPT_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'addRegistration',
+                            sheetId: REGISTRATION_SHEET_ID,
+                            sheetName: REGISTRATION_SHEET_NAME,
+                            data: formData
+                        })
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json();
+                        if (result.success) {
+                            console.log('✅ تم إرسال طلب التسجيل إلى جوجل شيت بنجاح');
+                            return true;
+                        }
+                    }
+                } catch (scriptError) {
+                    console.log('⚠️ Google Apps Script غير متاح للتسجيل');
+                }
+                
+                // Method 2: Store locally and show instructions
+                const registrationId = 'REG_' + Date.now();
+                localStorage.setItem(registrationId, JSON.stringify(formData));
+                console.log('💾 تم حفظ طلب التسجيل محلياً:', registrationId);
+                
+                return false; // Will trigger fallback instructions
+                
+            } catch (error) {
+                console.error('❌ خطأ في إرسال طلب التسجيل:', error);
+                return false;
+            }
+        }
+        
+        // Function to show registration fallback instructions
+        function showRegistrationFallbackInstructions(formData) {
+            const instructions = `
+📋 بيانات طلب التسجيل:
+
+👤 الاسم: ${formData.name}
+👥 النوع: ${formData.gender}
+📱 الهاتف: ${formData.phone}
+${formData.parentPhone ? `📞 هاتف ولي الأمر: ${formData.parentPhone}` : ''}
+🎂 تاريخ الميلاد: ${formData.birthDate}
+📚 السنة الدراسية: ${formData.desiredStage}
+${formData.deaconDegree ? `⛪ درجة الرسامة: ${formData.deaconDegree}` : ''}
+🏠 العنوان: ${formData.address}
+${formData.notes ? `📝 ملاحظات: ${formData.notes}` : ''}
+📅 تاريخ التسجيل: ${formData.registrationDate} - ${formData.registrationTime}
+
+🔗 يرجى إرسال هذه البيانات إلى الخدام عبر:
+• الهاتف: 01234567890
+• أو إضافتها يدوياً في جوجل شيت
+            `;
+            
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-6 max-w-2xl mx-auto card-shadow max-h-96 overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <div class="text-4xl mb-4">📝</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">تم حفظ طلب التسجيل محلياً</h3>
+                        <p class="text-gray-600">يرجى إرسال البيانات التالية للخدام لإكمال التسجيل:</p>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6 text-right" dir="rtl">
+                        <pre class="text-sm text-gray-700 whitespace-pre-wrap font-mono">${instructions}</pre>
+                    </div>
+                    
+                    <div class="flex gap-3">
+                        <button onclick="copyToClipboard(\`${instructions.replace(/`/g, '\\`')}\`)" class="flex-1 bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            📋 نسخ البيانات
+                        </button>
+                        <button onclick="this.closest('.fixed').remove(); showSection('news');" class="flex-1 bg-gray-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                            إغلاق
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load both students and teachers data from Google Sheets on page load
+            Promise.all([fetchStudentsData(), fetchTeachersData()]).then(([studentsSuccess, teachersSuccess]) => {
+                const statusElement = document.getElementById('connectionStatus');
+                const statusText = document.getElementById('statusText');
+                
+                console.log('Students loaded:', studentsDataLoaded, 'Count:', studentsData.length);
+                console.log('Teachers loaded:', teachersDataLoaded, 'Count:', teachersData.length);
+                
+                // Update last update time
+                const lastUpdateElement = document.getElementById('lastUpdate');
+                if (lastUpdateElement) {
+                    lastUpdateElement.textContent = new Date().toLocaleString('ar-EG');
+                }
+                
+                if (studentsSuccess && teachersSuccess) {
+                    console.log('تم تحميل جميع البيانات بنجاح من جوجل شيت');
+                    statusElement.className = 'text-sm px-4 py-2 rounded-full bg-green-100 text-green-800 border border-green-300';
+                    statusText.textContent = `✅ متصل - ${studentsData.length} دارس، ${teachersData.length} خادم`;
+                } else if (studentsSuccess || teachersSuccess) {
+                    console.log('تم تحميل بعض البيانات من جوجل شيت');
+                    statusElement.className = 'text-sm px-4 py-2 rounded-full bg-yellow-100 text-yellow-800 border border-yellow-300';
+                    const studentsStatus = studentsSuccess ? `${studentsData.length} دارس ✅` : `${studentsData.length} دارس ⚠️`;
+                    const teachersStatus = teachersSuccess ? `${teachersData.length} خادم ✅` : `${teachersData.length} خادم ⚠️`;
+                    statusText.textContent = `⚠️ متصل جزئياً - ${studentsStatus}، ${teachersStatus}`;
+                    
+                    // Show detailed error information
+                    if (!teachersSuccess) {
+                        console.log('🔍 تفاصيل مشكلة تحميل بيانات الخدام:');
+                        console.log('📋 الرابط المستخدم:', `https://docs.google.com/spreadsheets/d/${TEACHERS_SHEET_ID}/export?format=csv&gid=${TEACHERS_SHEET_GID}`);
+                        console.log('🔗 رابط الشيت الأصلي:', `https://docs.google.com/spreadsheets/d/${TEACHERS_SHEET_ID}/edit`);
+                        console.log('💡 خطوات الحل:');
+                        console.log('   1. افتح الشيت من الرابط أعلاه');
+                        console.log('   2. اضغط على "Share" أو "مشاركة"');
+                        console.log('   3. اختر "Anyone with the link can view"');
+                        console.log('   4. تأكد من وجود بيانات الخدام في الشيت');
+                        console.log('   5. العمود الأول: كود الخادم، العمود الثاني: اسم الخادم');
+                    }
+                } else {
+                    console.log('تم استخدام البيانات التجريبية');
+                    statusElement.className = 'text-sm px-4 py-2 rounded-full bg-red-100 text-red-800 border border-red-300';
+                    statusText.textContent = `⚠️ بيانات تجريبية - ${studentsData.length} دارس، ${teachersData.length} خادم`;
+                }
+                
+                // Generate reports when data is loaded
+                if (studentsDataLoaded) {
+                    generateReports();
+                }
+            });
+        });
+
+        // Teacher dashboard functions
+        function showTeacherSection(section) {
+            const content = document.getElementById('teacherContent');
+            
+            if (section === 'attendance') {
+                content.innerHTML = `
+                    <div class="bg-blue-50 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold text-blue-800 mb-4">تسجيل الحضور والغياب</h3>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">اختر السنة الدراسية:</label>
+                            <select class="w-full md:w-1/3 p-3 border border-gray-300 rounded-lg">
+                                <option>السنة الأولى</option>
+                                <option>السنة الثانية</option>
+                                <option>السنة الثالثة</option>
+                            </select>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <p class="text-gray-600">سيتم عرض قائمة الطلاب هنا لتسجيل الحضور والغياب</p>
+                        </div>
+                    </div>
+                `;
+            } else if (section === 'grades') {
+                content.innerHTML = `
+                    <div class="bg-green-50 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold text-green-800 mb-4">إدارة الدرجات</h3>
+                        <div class="mb-4">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">اختر السنة الدراسية:</label>
+                            <select class="w-full md:w-1/3 p-3 border border-gray-300 rounded-lg">
+                                <option>السنة الأولى</option>
+                                <option>السنة الثانية</option>
+                                <option>السنة الثالثة</option>
+                            </select>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <p class="text-gray-600">سيتم عرض نموذج إدخال الدرجات هنا</p>
+                        </div>
+                    </div>
+                `;
+            } else if (section === 'students') {
+                content.innerHTML = `
+                    <div class="bg-purple-50 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold text-purple-800 mb-4">إدارة بيانات الطلاب</h3>
+                        <div class="flex gap-4 mb-4">
+                            <button class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                إضافة طالب جديد
+                            </button>
+                            <button class="bg-gray-600 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                                تصدير البيانات
+                            </button>
+                        </div>
+                        <div class="bg-white rounded-lg p-4">
+                            <p class="text-gray-600">سيتم عرض قائمة الطلاب وأدوات الإدارة هنا</p>
+                        </div>
+                    </div>
+                `;
+            } else if (section === 'password') {
+                const teacher = currentUser.data;
+                content.innerHTML = `
+                    <div class="bg-yellow-50 rounded-lg p-6">
+                        <h3 class="text-2xl font-bold text-yellow-800 mb-6">🔐 تغيير كلمة المرور</h3>
+                        
+                        <div class="bg-white rounded-lg p-6 max-w-md mx-auto">
+                            <div class="mb-6">
+                                <div class="flex items-center gap-3 mb-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center">
+                                        <span class="text-2xl">👤</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-gray-800">${teacher.name}</h4>
+                                        <p class="text-sm text-gray-600">كود الخادم: ${teacher.code}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <form id="changePasswordForm" onsubmit="handlePasswordChange(event)">
+                                <div class="mb-4">
+                                    <label for="currentPassword" class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور الحالية</label>
+                                    <input type="password" id="currentPassword" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="أدخل كلمة المرور الحالية" required>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="newPassword" class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور الجديدة</label>
+                                    <input type="password" id="newPassword" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="أدخل كلمة المرور الجديدة" required minlength="6">
+                                    <p class="text-xs text-gray-500 mt-1">يجب أن تكون كلمة المرور 6 أحرف على الأقل</p>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="confirmPassword" class="block text-sm font-semibold text-gray-700 mb-2">تأكيد كلمة المرور الجديدة</label>
+                                    <input type="password" id="confirmPassword" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-transparent" placeholder="أعد إدخال كلمة المرور الجديدة" required>
+                                </div>
+                                
+                                <div class="flex gap-3">
+                                    <button type="submit" class="flex-1 bg-yellow-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-yellow-700 transition-colors">
+                                        تحديث كلمة المرور
+                                    </button>
+                                    <button type="button" onclick="showTeacherSection('home')" class="flex-1 bg-gray-500 text-white py-3 px-4 rounded-lg font-semibold hover:bg-gray-600 transition-colors">
+                                        إلغاء
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                        
+                        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+                            <h4 class="font-bold text-blue-800 mb-2">💡 نصائح الأمان:</h4>
+                            <ul class="text-sm text-blue-700 space-y-1">
+                                <li>• استخدم كلمة مرور قوية تحتوي على أرقام وحروف</li>
+                                <li>• لا تشارك كلمة المرور مع أي شخص آخر</li>
+                                <li>• قم بتغيير كلمة المرور بانتظام</li>
+                                <li>• تأكد من تسجيل الخروج بعد انتهاء العمل</li>
+                            </ul>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Handle password change
+        async function handlePasswordChange(event) {
+            event.preventDefault();
+            
+            const currentPassword = document.getElementById('currentPassword').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            const teacher = currentUser.data;
+            
+            // Validate current password
+            if (currentPassword !== teacher.password) {
+                showCustomModal('خطأ', 'كلمة المرور الحالية غير صحيحة', 'error');
+                return;
+            }
+            
+            // Validate new password
+            if (newPassword.length < 6) {
+                showCustomModal('خطأ', 'يجب أن تكون كلمة المرور الجديدة 6 أحرف على الأقل', 'error');
+                return;
+            }
+            
+            // Validate password confirmation
+            if (newPassword !== confirmPassword) {
+                showCustomModal('خطأ', 'كلمة المرور الجديدة وتأكيدها غير متطابقين', 'error');
+                return;
+            }
+            
+            // Check if new password is different from current
+            if (newPassword === currentPassword) {
+                showCustomModal('خطأ', 'كلمة المرور الجديدة يجب أن تكون مختلفة عن الحالية', 'error');
+                return;
+            }
+            
+            try {
+                // Show loading message
+                showCustomModal('جاري التحديث...', 'يتم تحديث كلمة المرور في جوجل شيت', 'info');
+                
+                // Update password in Google Sheets
+                const success = await updatePasswordInSheet(teacher.code, newPassword);
+                
+                if (success) {
+                    // Update current user data
+                    currentUser.data.password = newPassword;
+                    
+                    // Clear form
+                    document.getElementById('changePasswordForm').reset();
+                    
+                    // Show success message
+                    showCustomModal('تم التحديث بنجاح!', 'تم تحديث كلمة المرور بنجاح. استخدم كلمة المرور الجديدة في المرة القادمة.', 'success');
+                    
+                    // Return to dashboard home
+                    setTimeout(() => {
+                        showTeacherSection('home');
+                    }, 2000);
+                    
+                } else {
+                    showCustomModal('خطأ في التحديث', 'حدث خطأ أثناء تحديث كلمة المرور. يرجى المحاولة مرة أخرى.', 'error');
+                }
+                
+            } catch (error) {
+                console.error('خطأ في تحديث كلمة المرور:', error);
+                showCustomModal('خطأ', 'حدث خطأ غير متوقع. يرجى المحاولة مرة أخرى.', 'error');
+            }
+        }
+
+        // PDF viewer function
+        function viewPDF(bookName) {
+            showCustomModal('عرض المنهج', `سيتم فتح كتاب "${bookName}" في نافذة جديدة`, 'info');
+        }
+
+        // Custom modal function
+        function showCustomModal(title, message, type) {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50';
+            
+            const iconColor = type === 'success' ? 'text-green-500' : type === 'error' ? 'text-red-500' : 'text-blue-500';
+            const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg p-8 max-w-md mx-4 card-shadow">
+                    <div class="text-center">
+                        <div class="text-4xl mb-4">${icon}</div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-4">${title}</h3>
+                        <p class="text-gray-600 mb-6">${message}</p>
+                        <button onclick="this.closest('.fixed').remove()" class="bg-yellow-600 text-white px-6 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
+                            موافق
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (modal.parentNode) {
+                    modal.remove();
+                }
+            }, 3000);
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99659cbcf2c4e238',t:'MTc2MTc3MTcyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
