@@ -1,0 +1,1619 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>نظام إدارة مركز الحبيب الإلكتروني</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&display=swap');
+        
+        * {
+            font-family: 'Amiri', serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e40af 0%, #3b82f6 50%, #60a5fa 100%);
+        }
+        
+        .admin-gradient {
+            background: linear-gradient(135deg, #dc2626 0%, #ef4444 50%, #f87171 100%);
+        }
+        
+        .teacher-gradient {
+            background: linear-gradient(135deg, #059669 0%, #10b981 50%, #34d399 100%);
+        }
+        
+        .student-gradient {
+            background: linear-gradient(135deg, #7c3aed 0%, #8b5cf6 50%, #a78bfa 100%);
+        }
+        
+        .card-shadow {
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .nav-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: #3b82f6;
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-item:hover::before,
+        .nav-item.active::before {
+            width: 100%;
+        }
+        
+        .loading-spinner {
+            border: 3px solid #f3f4f6;
+            border-top: 3px solid #3b82f6;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .danger-zone {
+            border: 2px solid #dc2626;
+            background: #fef2f2;
+        }
+        
+        .backup-card {
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        
+        .backup-card:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="bg-gray-50"><!-- Header -->
+  <header class="gradient-bg text-white shadow-lg">
+   <div class="container mx-auto px-4 py-6">
+    <div class="flex items-center justify-between">
+     <div class="flex items-center space-x-4 space-x-reverse">
+      <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center">
+       <svg class="w-10 h-10 text-blue-600" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2L13.09 8.26L20 9L13.09 9.74L12 16L10.91 9.74L4 9L10.91 8.26L12 2Z" /> <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2" />
+       </svg>
+      </div>
+      <div>
+       <h1 id="systemTitle" class="text-2xl font-bold">نظام إدارة مركز الحبيب الإلكتروني</h1>
+       <p id="centerInfo" class="text-blue-200"><span id="centerName">مركز الحبيب للألحان والدراسات القبطية</span> - <span id="churchName">كنيسة السيدة العذراء والقديس مار يوحنا</span></p>
+      </div>
+     </div>
+     <div id="userInfo" class="hidden text-left">
+      <div class="text-sm text-blue-200">
+       مرحباً
+      </div>
+      <div id="userName" class="font-semibold"></div>
+      <div id="userRole" class="text-xs text-blue-300"></div>
+     </div>
+    </div>
+   </div>
+  </header><!-- Navigation -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+   <div class="container mx-auto px-4">
+    <div class="flex justify-center space-x-8 space-x-reverse py-4" id="mainNavigation"><button class="nav-item active px-4 py-2 text-gray-700 hover:text-blue-600 font-semibold transition-colors" onclick="showSection('home')"> 🏠 الصفحة الرئيسية </button> <button class="nav-item px-4 py-2 text-gray-700 hover:text-blue-600 font-semibold transition-colors" onclick="showSection('login')"> 🔑 تسجيل الدخول </button>
+    </div><!-- Admin Navigation -->
+    <div id="adminNavigation" class="hidden flex justify-center space-x-6 space-x-reverse py-4 border-t border-gray-200"><button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-red-600 font-semibold transition-colors" onclick="showAdminSection('dashboard')"> 📊 لوحة المشرف </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-red-600 font-semibold transition-colors" onclick="showAdminSection('students')"> 👥 إدارة الدارسين </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-red-600 font-semibold transition-colors" onclick="showAdminSection('teachers')"> 👨‍🏫 إدارة الخدام </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-red-600 font-semibold transition-colors" onclick="showAdminSection('attendance')"> 📝 الحضور والغياب </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-red-600 font-semibold transition-colors" onclick="showAdminSection('grades')"> 📈 الدرجات </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-red-600 font-semibold transition-colors" onclick="showAdminSection('backup')"> 💾 النسخ الاحتياطي </button>
+    </div><!-- Teacher Navigation -->
+    <div id="teacherNavigation" class="hidden flex justify-center space-x-6 space-x-reverse py-4 border-t border-gray-200"><button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-green-600 font-semibold transition-colors" onclick="showTeacherSection('dashboard')"> 🎯 لوحة الخادم </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-green-600 font-semibold transition-colors" onclick="showTeacherSection('attendance')"> ✅ تسجيل الحضور </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-green-600 font-semibold transition-colors" onclick="showTeacherSection('grades')"> 📊 إدخال الدرجات </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-green-600 font-semibold transition-colors" onclick="showTeacherSection('students')"> 👥 طلابي </button>
+    </div><!-- Student Navigation -->
+    <div id="studentNavigation" class="hidden flex justify-center space-x-6 space-x-reverse py-4 border-t border-gray-200"><button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-purple-600 font-semibold transition-colors" onclick="showStudentSection('profile')"> 👤 ملفي الشخصي </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-purple-600 font-semibold transition-colors" onclick="showStudentSection('grades')"> 📊 درجاتي </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-purple-600 font-semibold transition-colors" onclick="showStudentSection('attendance')"> 📅 حضوري </button> <button class="nav-item px-3 py-2 text-sm text-gray-700 hover:text-purple-600 font-semibold transition-colors" onclick="showStudentSection('homework')"> 📚 الواجبات </button>
+    </div>
+   </div>
+  </nav><!-- Main Content -->
+  <main class="container mx-auto px-4 py-8"><!-- Home Section -->
+   <section id="home" class="section-content fade-in">
+    <div class="text-center mb-12">
+     <h2 class="text-4xl font-bold text-gray-800 mb-4">نظام إدارة مركز الحبيب الإلكتروني</h2>
+     <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">نظام متكامل Serverless يعمل بالكامل بدون خادم Backend - التخزين محلي في المتصفح</p>
+    </div><!-- System Features -->
+    <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-8 card-shadow mb-8">
+     <h3 class="text-2xl font-bold text-gray-800 mb-6 text-center">🎯 مميزات النظام الجديد</h3>
+     <div class="grid md:grid-cols-3 gap-6">
+      <div class="text-center p-4 bg-white rounded-lg">
+       <div class="text-3xl mb-3">
+        💾
+       </div>
+       <h4 class="font-bold text-blue-800 mb-2">تخزين محلي</h4>
+       <p class="text-sm text-blue-600">جميع البيانات محفوظة في متصفحك - لا حاجة لخادم</p>
+      </div>
+      <div class="text-center p-4 bg-white rounded-lg">
+       <div class="text-3xl mb-3">
+        📥
+       </div>
+       <h4 class="font-bold text-green-800 mb-2">استيراد وتصدير</h4>
+       <p class="text-sm text-green-600">نسخ احتياطي كامل بصيغة Excel و JSON</p>
+      </div>
+      <div class="text-center p-4 bg-white rounded-lg">
+       <div class="text-3xl mb-3">
+        🔒
+       </div>
+       <h4 class="font-bold text-purple-800 mb-2">أمان كامل</h4>
+       <p class="text-sm text-purple-600">بياناتك لا تغادر جهازك أبداً</p>
+      </div>
+     </div>
+    </div><!-- User Types -->
+    <div class="grid md:grid-cols-3 gap-8 mb-12"><!-- Admin Panel -->
+     <div class="bg-white rounded-lg p-8 card-shadow hover-lift border-t-4 border-red-500">
+      <div class="text-center">
+       <div class="w-20 h-20 admin-gradient rounded-full flex items-center justify-center mx-auto mb-6"><span class="text-3xl text-white">👨‍💼</span>
+       </div>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4">لوحة الإدارة</h3>
+       <div class="text-gray-600 space-y-2 mb-6">
+        <p>• إضافة وتعديل الدارسين والخدام</p>
+        <p>• إدارة الحضور والدرجات</p>
+        <p>• نسخ احتياطي كامل</p>
+        <p>• تقارير شاملة</p>
+       </div>
+       <div class="bg-red-50 border border-red-200 rounded-lg p-3">
+        <p class="text-sm text-red-700 font-semibold">Username: ADMIN</p>
+        <p class="text-sm text-red-700 font-semibold">Password: admin123</p>
+       </div>
+      </div>
+     </div><!-- Teacher Panel -->
+     <div class="bg-white rounded-lg p-8 card-shadow hover-lift border-t-4 border-green-500">
+      <div class="text-center">
+       <div class="w-20 h-20 teacher-gradient rounded-full flex items-center justify-center mx-auto mb-6"><span class="text-3xl text-white">👨‍🏫</span>
+       </div>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4">لوحة الخادم</h3>
+       <div class="text-gray-600 space-y-2 mb-6">
+        <p>• تسجيل الحضور والغياب</p>
+        <p>• إدخال درجات الواجبات</p>
+        <p>• متابعة الطلاب</p>
+        <p>• رفع التحضير</p>
+       </div>
+       <div class="bg-green-50 border border-green-200 rounded-lg p-3">
+        <p class="text-sm text-green-700 font-semibold">كود الخادم + كلمة المرور</p>
+       </div>
+      </div>
+     </div><!-- Student Panel -->
+     <div class="bg-white rounded-lg p-8 card-shadow hover-lift border-t-4 border-purple-500">
+      <div class="text-center">
+       <div class="w-20 h-20 student-gradient rounded-full flex items-center justify-center mx-auto mb-6"><span class="text-3xl text-white">👨‍🎓</span>
+       </div>
+       <h3 class="text-2xl font-bold text-gray-800 mb-4">لوحة الدارس</h3>
+       <div class="text-gray-600 space-y-2 mb-6">
+        <p>• عرض الدرجات والنتائج</p>
+        <p>• متابعة الحضور</p>
+        <p>• تسليم الواجبات</p>
+        <p>• تحميل المواد</p>
+       </div>
+       <div class="bg-purple-50 border border-purple-200 rounded-lg p-3">
+        <p class="text-sm text-purple-700 font-semibold">كود الدارس الفريد</p>
+       </div>
+      </div>
+     </div>
+    </div><!-- Storage Info -->
+    <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+     <h3 class="text-xl font-bold text-blue-800 mb-4">💾 نظام التخزين</h3>
+     <div class="grid md:grid-cols-2 gap-6">
+      <div class="bg-white p-4 rounded-lg">
+       <h4 class="font-bold text-blue-800 mb-3">📦 LocalStorage</h4>
+       <div class="space-y-2 text-sm">
+        <p>• بيانات الدارسين والخدام</p>
+        <p>• سجلات الحضور والدرجات</p>
+        <p>• الواجبات المرفوعة</p>
+        <p>• إعدادات النظام</p>
+       </div>
+      </div>
+      <div class="bg-white p-4 rounded-lg">
+       <h4 class="font-bold text-green-800 mb-3">📥 النسخ الاحتياطي</h4>
+       <div class="space-y-2 text-sm">
+        <p>• تصدير Excel (دارسين / خدام / كامل)</p>
+        <p>• تصدير JSON</p>
+        <p>• استيراد من Excel</p>
+        <p>• استيراد من JSON</p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Login Section -->
+   <section id="login" class="section-content hidden">
+    <div class="max-w-md mx-auto bg-white rounded-lg p-8 card-shadow">
+     <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">تسجيل الدخول</h2>
+     <div class="mb-6">
+      <div class="flex border-b border-gray-200"><button id="adminTab" class="flex-1 py-3 px-4 text-center font-semibold text-gray-500" onclick="switchLoginTab('admin')"> 👨‍💼 إدارة </button> <button id="teacherTab" class="flex-1 py-3 px-4 text-center font-semibold text-gray-500" onclick="switchLoginTab('teacher')"> 👨‍🏫 خادم </button> <button id="studentTab" class="flex-1 py-3 px-4 text-center font-semibold text-blue-600 border-b-2 border-blue-600" onclick="switchLoginTab('student')"> 👨‍🎓 دارس </button>
+      </div>
+     </div>
+     <form id="loginForm" onsubmit="handleLogin(event)">
+      <div id="studentLogin">
+       <div class="mb-6"><label for="studentCode" class="block text-sm font-semibold text-gray-700 mb-2">كود الدارس</label> <input type="text" id="studentCode" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="مثال: DQ34ZA54">
+       </div>
+      </div>
+      <div id="teacherLogin" class="hidden">
+       <div class="mb-4"><label for="teacherCode" class="block text-sm font-semibold text-gray-700 mb-2">كود الخادم</label> <input type="text" id="teacherCode" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="مثال: FZ64SZ56">
+       </div>
+       <div class="mb-6"><label for="teacherPassword" class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور</label> <input type="password" id="teacherPassword" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" placeholder="أدخل كلمة المرور">
+       </div>
+      </div>
+      <div id="adminLogin" class="hidden">
+       <div class="mb-4"><label for="adminUsername" class="block text-sm font-semibold text-gray-700 mb-2">اسم المستخدم</label> <input type="text" id="adminUsername" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="ADMIN">
+       </div>
+       <div class="mb-6"><label for="adminPassword" class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور</label> <input type="password" id="adminPassword" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="admin123">
+       </div>
+      </div><button type="submit" id="loginButton" class="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"> <span class="flex items-center justify-center gap-2"> <span id="loginButtonText">تسجيل دخول الدارس</span>
+        <div id="loginSpinner" class="loading-spinner hidden"></div></span> </button>
+     </form>
+     <div class="mt-6 text-center"><button onclick="logout()" class="text-gray-500 hover:text-gray-700 text-sm"> تسجيل الخروج </button>
+     </div>
+    </div>
+   </section><!-- Admin Dashboard -->
+   <section id="adminDashboard" class="section-content hidden">
+    <div class="bg-white rounded-lg p-8 card-shadow">
+     <div class="flex justify-between items-center mb-8">
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800">لوحة الإدارة</h2>
+       <p class="text-gray-600">إدارة شاملة لمركز الحبيب</p>
+      </div><button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"> تسجيل الخروج </button>
+     </div><!-- Quick Stats -->
+     <div class="grid md:grid-cols-4 gap-6 mb-8">
+      <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-6 text-center">
+       <div class="text-3xl mb-2">
+        👥
+       </div>
+       <h3 class="text-2xl font-bold text-blue-800" id="totalStudentsCount">0</h3>
+       <p class="text-blue-600">إجمالي الدارسين</p>
+      </div>
+      <div class="bg-gradient-to-br from-green-50 to-green-100 rounded-lg p-6 text-center">
+       <div class="text-3xl mb-2">
+        👨‍🏫
+       </div>
+       <h3 class="text-2xl font-bold text-green-800" id="totalTeachersCount">0</h3>
+       <p class="text-green-600">عدد الخدام</p>
+      </div>
+      <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg p-6 text-center">
+       <div class="text-3xl mb-2">
+        📊
+       </div>
+       <h3 class="text-2xl font-bold text-yellow-800" id="attendanceRate">0%</h3>
+       <p class="text-yellow-600">معدل الحضور</p>
+      </div>
+      <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-6 text-center">
+       <div class="text-3xl mb-2">
+        📈
+       </div>
+       <h3 class="text-2xl font-bold text-purple-800" id="avgGrade">0%</h3>
+       <p class="text-purple-600">متوسط الدرجات</p>
+      </div>
+     </div>
+     <div id="adminContent">
+      <div class="text-center py-12">
+       <div class="text-6xl mb-4">
+        📊
+       </div>
+       <p class="text-gray-500 text-lg">اختر أحد الأقسام من الشريط العلوي</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Teacher Dashboard -->
+   <section id="teacherDashboard" class="section-content hidden">
+    <div class="bg-white rounded-lg p-8 card-shadow">
+     <div class="flex justify-between items-center mb-8">
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800">لوحة الخادم</h2>
+       <p class="text-gray-600" id="teacherWelcome">مرحباً بك</p>
+      </div><button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"> تسجيل الخروج </button>
+     </div>
+     <div id="teacherContent">
+      <div class="text-center py-12">
+       <div class="text-6xl mb-4">
+        🎯
+       </div>
+       <p class="text-gray-500 text-lg">اختر أحد الأقسام من الشريط العلوي</p>
+      </div>
+     </div>
+    </div>
+   </section><!-- Student Dashboard -->
+   <section id="studentDashboard" class="section-content hidden">
+    <div class="bg-white rounded-lg p-8 card-shadow">
+     <div class="flex justify-between items-center mb-8">
+      <div>
+       <h2 class="text-3xl font-bold text-gray-800">ملفي الشخصي</h2>
+       <p class="text-gray-600" id="studentWelcome">مرحباً بك</p>
+      </div><button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors"> تسجيل الخروج </button>
+     </div>
+     <div id="studentContent">
+      <div class="text-center py-12">
+       <div class="text-6xl mb-4">
+        👨‍🎓
+       </div>
+       <p class="text-gray-500 text-lg">اختر أحد الأقسام من الشريط العلوي</p>
+      </div>
+     </div>
+    </div>
+   </section>
+  </main><!-- Footer -->
+  <footer class="gradient-bg text-white mt-16">
+   <div class="container mx-auto px-4 py-8">
+    <div class="text-center">
+     <h3 class="text-xl font-bold mb-4">نظام إدارة مركز الحبيب الإلكتروني</h3>
+     <p class="text-blue-200 mb-4">نظام Serverless متكامل - التخزين محلي بالكامل</p>
+     <p class="text-sm text-blue-100">جميع الحقوق محفوظة © 2024</p>
+    </div>
+   </div>
+  </footer>
+  <script>
+        // Configuration
+        const defaultConfig = {
+            system_title: "نظام إدارة مركز الحبيب الإلكتروني",
+            center_name: "مركز الحبيب للألحان والدراسات القبطية",
+            church_name: "كنيسة السيدة العذراء والقديس مار يوحنا"
+        };
+
+        // Current user and state
+        let currentUser = null;
+        let currentLoginTab = 'student';
+
+        // Storage Keys
+        const STORAGE_KEYS = {
+            STUDENTS: 'alhabeeb_students',
+            TEACHERS: 'alhabeeb_teachers',
+            ATTENDANCE: 'alhabeeb_attendance',
+            GRADES: 'alhabeeb_grades',
+            HOMEWORK: 'alhabeeb_homework',
+            ADMIN: 'alhabeeb_admin'
+        };
+
+        // Default Admin Account
+        const DEFAULT_ADMIN = {
+            username: 'ADMIN',
+            password: 'admin123',
+            name: 'المدير العام'
+        };
+
+        // Educational Stages
+        const STAGES = [
+            'KG1', 'KG2', 'الصف الأول', 'الصف الثاني', 'الصف الثالث',
+            'الصف الرابع', 'الصف الخامس', 'الصف السادس',
+            'الصف الأول الإعدادي', 'الصف الثاني الإعدادي', 'الصف الثالث الإعدادي',
+            'الصف الأول الثانوي', 'الصف الثاني الثانوي', 'الصف الثالث الثانوي',
+            'الجامعة', 'أولياء الأمور'
+        ];
+
+        // Classes
+        const CLASSES = [
+            'تمهيدي', 'أولي وثانية', 'ثالثة ورابعة', 'خامسة وسادسة',
+            'إعدادي', 'ثانوي', 'جامعة', 'أولياء أمور'
+        ];
+
+        // Teacher Specialties
+        const SPECIALTIES = [
+            'دراسي طقوس', 'قبطي', 'ألحان', 'محفوظات', 'إداري', 'مساعد'
+        ];
+
+        // Generate Random Code
+        function generateCode(prefix = '') {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let code = prefix;
+            for (let i = 0; i < 8; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        // LocalStorage Helper Functions
+        function saveToStorage(key, data) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+                return true;
+            } catch (error) {
+                console.error('خطأ في حفظ البيانات:', error);
+                showToast('خطأ في حفظ البيانات', 'error');
+                return false;
+            }
+        }
+
+        function loadFromStorage(key, defaultValue = []) {
+            try {
+                const data = localStorage.getItem(key);
+                return data ? JSON.parse(data) : defaultValue;
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                return defaultValue;
+            }
+        }
+
+        // Initialize System
+        async function initializeSystem() {
+            try {
+                // Initialize Element SDK
+                if (window.elementSdk) {
+                    await window.elementSdk.init({
+                        defaultConfig,
+                        onConfigChange: async (config) => {
+                            document.getElementById('systemTitle').textContent = config.system_title || defaultConfig.system_title;
+                            document.getElementById('centerName').textContent = config.center_name || defaultConfig.center_name;
+                            document.getElementById('churchName').textContent = config.church_name || defaultConfig.church_name;
+                        },
+                        mapToCapabilities: (config) => ({
+                            recolorables: [],
+                            borderables: [],
+                            fontEditable: undefined,
+                            fontSizeable: undefined
+                        }),
+                        mapToEditPanelValues: (config) => new Map([
+                            ["system_title", config.system_title || defaultConfig.system_title],
+                            ["center_name", config.center_name || defaultConfig.center_name],
+                            ["church_name", config.church_name || defaultConfig.church_name]
+                        ])
+                    });
+                }
+
+                // Initialize Data SDK
+                if (window.dataSdk) {
+                    const dataHandler = {
+                        onDataChanged(data) {
+                            console.log('تم تحديث البيانات:', data.length);
+                        }
+                    };
+                    
+                    const result = await window.dataSdk.init(dataHandler);
+                    if (result.isOk) {
+                        console.log('✅ تم تهيئة Data SDK بنجاح');
+                    }
+                }
+
+                // Initialize default admin if not exists
+                const admin = loadFromStorage(STORAGE_KEYS.ADMIN, null);
+                if (!admin) {
+                    saveToStorage(STORAGE_KEYS.ADMIN, DEFAULT_ADMIN);
+                }
+
+                // Load initial data
+                updateDashboardStats();
+                
+                console.log('✅ تم تهيئة النظام بنجاح');
+                
+            } catch (error) {
+                console.error('❌ خطأ في تهيئة النظام:', error);
+                showToast('حدث خطأ في تهيئة النظام', 'error');
+            }
+        }
+
+        // Navigation functions
+        function showSection(sectionId) {
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            document.querySelectorAll('#mainNavigation .nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // Login functions
+        function switchLoginTab(tab) {
+            currentLoginTab = tab;
+            
+            document.querySelectorAll('[id$="Tab"]').forEach(tabBtn => {
+                tabBtn.className = 'flex-1 py-3 px-4 text-center font-semibold text-gray-500';
+            });
+            
+            const colors = {
+                admin: 'text-red-600 border-b-2 border-red-600',
+                teacher: 'text-green-600 border-b-2 border-green-600',
+                student: 'text-blue-600 border-b-2 border-blue-600'
+            };
+            
+            document.getElementById(tab + 'Tab').className += ' ' + colors[tab];
+            
+            document.getElementById('adminLogin').classList.toggle('hidden', tab !== 'admin');
+            document.getElementById('teacherLogin').classList.toggle('hidden', tab !== 'teacher');
+            document.getElementById('studentLogin').classList.toggle('hidden', tab !== 'student');
+            
+            const buttonColors = {
+                admin: 'bg-red-600 hover:bg-red-700',
+                teacher: 'bg-green-600 hover:bg-green-700',
+                student: 'bg-blue-600 hover:bg-blue-700'
+            };
+            
+            const buttonTexts = {
+                admin: 'تسجيل دخول الإدارة',
+                teacher: 'تسجيل دخول الخادم',
+                student: 'تسجيل دخول الدارس'
+            };
+            
+            const loginButton = document.getElementById('loginButton');
+            loginButton.className = `w-full ${buttonColors[tab]} text-white py-3 px-4 rounded-lg font-semibold transition-colors`;
+            document.getElementById('loginButtonText').textContent = buttonTexts[tab];
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const spinner = document.getElementById('loginSpinner');
+            const buttonText = document.getElementById('loginButtonText');
+            
+            spinner.classList.remove('hidden');
+            buttonText.textContent = 'جاري التحقق...';
+            
+            try {
+                let loginSuccess = false;
+                let userData = null;
+                
+                if (currentLoginTab === 'student') {
+                    const code = document.getElementById('studentCode').value.trim().toUpperCase();
+                    
+                    if (!code) {
+                        showToast('يرجى إدخال كود الدارس', 'error');
+                        return;
+                    }
+                    
+                    const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+                    userData = students.find(s => s.code === code);
+                    
+                    if (userData) {
+                        currentUser = { type: 'student', data: userData };
+                        loginSuccess = true;
+                        showStudentDashboard();
+                    }
+                } else if (currentLoginTab === 'teacher') {
+                    const code = document.getElementById('teacherCode').value.trim().toUpperCase();
+                    const password = document.getElementById('teacherPassword').value.trim();
+                    
+                    if (!code || !password) {
+                        showToast('يرجى إدخال كود الخادم وكلمة المرور', 'error');
+                        return;
+                    }
+                    
+                    const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+                    userData = teachers.find(t => t.code === code && t.password === password);
+                    
+                    if (userData) {
+                        currentUser = { type: 'teacher', data: userData };
+                        loginSuccess = true;
+                        showTeacherDashboard();
+                    }
+                } else if (currentLoginTab === 'admin') {
+                    const username = document.getElementById('adminUsername').value.trim();
+                    const password = document.getElementById('adminPassword').value.trim();
+                    
+                    if (!username || !password) {
+                        showToast('يرجى إدخال اسم المستخدم وكلمة المرور', 'error');
+                        return;
+                    }
+                    
+                    const admin = loadFromStorage(STORAGE_KEYS.ADMIN, DEFAULT_ADMIN);
+                    
+                    if (username === admin.username && password === admin.password) {
+                        currentUser = { type: 'admin', data: admin };
+                        loginSuccess = true;
+                        showAdminDashboard();
+                    }
+                }
+                
+                if (loginSuccess) {
+                    showToast(`مرحباً بك ${userData ? userData.name : currentUser.data.name}`, 'success');
+                    document.getElementById('loginForm').reset();
+                    updateUserInfo();
+                } else {
+                    showToast('البيانات المدخلة غير صحيحة', 'error');
+                }
+                
+            } catch (error) {
+                console.error('خطأ في تسجيل الدخول:', error);
+                showToast('حدث خطأ أثناء تسجيل الدخول', 'error');
+            } finally {
+                spinner.classList.add('hidden');
+                const buttonTexts = {
+                    admin: 'تسجيل دخول الإدارة',
+                    teacher: 'تسجيل دخول الخادم',
+                    student: 'تسجيل دخول الدارس'
+                };
+                buttonText.textContent = buttonTexts[currentLoginTab];
+            }
+        }
+
+        function updateUserInfo() {
+            const userInfo = document.getElementById('userInfo');
+            const userName = document.getElementById('userName');
+            const userRole = document.getElementById('userRole');
+            
+            if (currentUser) {
+                userInfo.classList.remove('hidden');
+                userName.textContent = currentUser.data.name;
+                
+                const roleTexts = {
+                    admin: 'مدير النظام',
+                    teacher: 'خادم - ' + (currentUser.data.specialty || ''),
+                    student: 'دارس - ' + (currentUser.data.stage || '')
+                };
+                
+                userRole.textContent = roleTexts[currentUser.type];
+            } else {
+                userInfo.classList.add('hidden');
+            }
+        }
+
+        function showAdminDashboard() {
+            showSection('adminDashboard');
+            document.getElementById('adminNavigation').classList.remove('hidden');
+            document.getElementById('teacherNavigation').classList.add('hidden');
+            document.getElementById('studentNavigation').classList.add('hidden');
+            updateDashboardStats();
+        }
+
+        function showTeacherDashboard() {
+            showSection('teacherDashboard');
+            document.getElementById('adminNavigation').classList.add('hidden');
+            document.getElementById('teacherNavigation').classList.remove('hidden');
+            document.getElementById('studentNavigation').classList.add('hidden');
+            
+            const welcome = document.getElementById('teacherWelcome');
+            welcome.textContent = `مرحباً ${currentUser.data.name} - ${currentUser.data.specialty}`;
+        }
+
+        function showStudentDashboard() {
+            showSection('studentDashboard');
+            document.getElementById('adminNavigation').classList.add('hidden');
+            document.getElementById('teacherNavigation').classList.add('hidden');
+            document.getElementById('studentNavigation').classList.remove('hidden');
+            
+            const welcome = document.getElementById('studentWelcome');
+            welcome.textContent = `مرحباً ${currentUser.data.name} - ${currentUser.data.stage}`;
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById('adminNavigation').classList.add('hidden');
+            document.getElementById('teacherNavigation').classList.add('hidden');
+            document.getElementById('studentNavigation').classList.add('hidden');
+            updateUserInfo();
+            showSection('home');
+            showToast('تم تسجيل الخروج بنجاح', 'success');
+        }
+
+        // Admin Sections
+        function showAdminSection(section) {
+            const content = document.getElementById('adminContent');
+            
+            if (section === 'dashboard') {
+                const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+                const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+                
+                content.innerHTML = `
+                    <div class="grid md:grid-cols-2 gap-8">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h3 class="text-xl font-bold text-blue-800 mb-4">📊 إحصائيات سريعة</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between">
+                                    <span>إجمالي الدارسين:</span>
+                                    <span class="font-bold">${students.length}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>عدد الخدام:</span>
+                                    <span class="font-bold">${teachers.length}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>معدل الحضور العام:</span>
+                                    <span class="font-bold text-green-600">85%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h3 class="text-xl font-bold text-green-800 mb-4">🎯 إجراءات سريعة</h3>
+                            <div class="space-y-2">
+                                <button onclick="showAdminSection('students')" class="w-full text-right p-3 bg-white rounded hover:bg-gray-50 transition-colors">
+                                    👥 إدارة الدارسين
+                                </button>
+                                <button onclick="showAdminSection('teachers')" class="w-full text-right p-3 bg-white rounded hover:bg-gray-50 transition-colors">
+                                    👨‍🏫 إدارة الخدام
+                                </button>
+                                <button onclick="showAdminSection('backup')" class="w-full text-right p-3 bg-white rounded hover:bg-gray-50 transition-colors">
+                                    💾 النسخ الاحتياطي
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else if (section === 'students') {
+                showStudentsManagement();
+            } else if (section === 'teachers') {
+                showTeachersManagement();
+            } else if (section === 'attendance') {
+                showAttendanceManagement();
+            } else if (section === 'grades') {
+                showGradesManagement();
+            } else if (section === 'backup') {
+                showBackupPage();
+            }
+        }
+
+        // Students Management
+        function showStudentsManagement() {
+            const content = document.getElementById('adminContent');
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            
+            content.innerHTML = `
+                <div class="mb-6 flex justify-between items-center">
+                    <h3 class="text-2xl font-bold text-gray-800">👥 إدارة الدارسين</h3>
+                    <button onclick="showAddStudentForm()" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                        ➕ إضافة دارس جديد
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-lg p-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 text-right">الكود</th>
+                                    <th class="p-3 text-right">الاسم</th>
+                                    <th class="p-3 text-center">النوع</th>
+                                    <th class="p-3 text-center">المرحلة</th>
+                                    <th class="p-3 text-center">الفصل</th>
+                                    <th class="p-3 text-center">الهاتف</th>
+                                    <th class="p-3 text-center">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${students.length === 0 ? `
+                                    <tr>
+                                        <td colspan="7" class="p-8 text-center text-gray-500">
+                                            لا يوجد دارسين مسجلين بعد
+                                        </td>
+                                    </tr>
+                                ` : students.map(student => `
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-3 font-mono text-sm">${student.code}</td>
+                                        <td class="p-3 font-semibold">${student.name}</td>
+                                        <td class="p-3 text-center">${student.gender}</td>
+                                        <td class="p-3 text-center">${student.stage}</td>
+                                        <td class="p-3 text-center">${student.className}</td>
+                                        <td class="p-3 text-center">${student.phone1}</td>
+                                        <td class="p-3 text-center">
+                                            <button onclick="editStudent('${student.code}')" class="text-blue-600 hover:text-blue-800 mx-1">✏️</button>
+                                            <button onclick="deleteStudent('${student.code}')" class="text-red-600 hover:text-red-800 mx-1">🗑️</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAddStudentForm() {
+            const modal = createModal('إضافة دارس جديد', `
+                <form id="addStudentForm" onsubmit="saveStudent(event)" class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">اسم الدارس *</label>
+                            <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">النوع *</label>
+                            <select name="gender" required class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر...</option>
+                                <option value="ذكر">ذكر</option>
+                                <option value="أنثى">أنثى</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">تاريخ الميلاد</label>
+                            <input type="date" name="birthDate" class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">المرحلة الدراسية *</label>
+                            <select name="stage" required class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر...</option>
+                                ${STAGES.map(stage => `<option value="${stage}">${stage}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">رقم هاتف 1 *</label>
+                            <input type="tel" name="phone1" required class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">رقم هاتف 2</label>
+                            <input type="tel" name="phone2" class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">حرف الفصل</label>
+                            <select name="classLetter" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر...</option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">الفصل داخل المركز</label>
+                            <select name="className" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر...</option>
+                                ${CLASSES.map(cls => `<option value="${cls}">${cls}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">رتبة الشماسية</label>
+                            <input type="text" name="rank" class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">العنوان</label>
+                            <input type="text" name="address" class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-3 gap-4">
+                        <div class="flex items-center">
+                            <input type="checkbox" name="hasForm" id="hasForm" class="ml-2">
+                            <label for="hasForm" class="text-sm">استمارة</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" name="hasPhoto" id="hasPhoto" class="ml-2">
+                            <label for="hasPhoto" class="text-sm">صورة</label>
+                        </div>
+                        <div class="flex items-center">
+                            <input type="checkbox" name="formPaid" id="formPaid" class="ml-2">
+                            <label for="formPaid" class="text-sm">قيمة الاستمارة</label>
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                            إلغاء
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+                            حفظ
+                        </button>
+                    </div>
+                </form>
+            `);
+        }
+
+        function saveStudent(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            
+            const newStudent = {
+                code: generateCode(''),
+                name: formData.get('name'),
+                gender: formData.get('gender'),
+                birthDate: formData.get('birthDate'),
+                stage: formData.get('stage'),
+                phone1: formData.get('phone1'),
+                phone2: formData.get('phone2'),
+                classLetter: formData.get('classLetter'),
+                className: formData.get('className'),
+                rank: formData.get('rank'),
+                address: formData.get('address'),
+                hasForm: formData.get('hasForm') === 'on',
+                hasPhoto: formData.get('hasPhoto') === 'on',
+                formPaid: formData.get('formPaid') === 'on',
+                createdAt: new Date().toISOString()
+            };
+            
+            students.push(newStudent);
+            
+            if (saveToStorage(STORAGE_KEYS.STUDENTS, students)) {
+                showToast(`تم إضافة الدارس بنجاح - الكود: ${newStudent.code}`, 'success');
+                closeModal();
+                showStudentsManagement();
+                updateDashboardStats();
+            }
+        }
+
+        function deleteStudent(code) {
+            if (!confirm('هل أنت متأكد من حذف هذا الدارس؟')) return;
+            
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            const filtered = students.filter(s => s.code !== code);
+            
+            if (saveToStorage(STORAGE_KEYS.STUDENTS, filtered)) {
+                showToast('تم حذف الدارس بنجاح', 'success');
+                showStudentsManagement();
+                updateDashboardStats();
+            }
+        }
+
+        // Teachers Management
+        function showTeachersManagement() {
+            const content = document.getElementById('adminContent');
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            
+            content.innerHTML = `
+                <div class="mb-6 flex justify-between items-center">
+                    <h3 class="text-2xl font-bold text-gray-800">👨‍🏫 إدارة الخدام</h3>
+                    <button onclick="showAddTeacherForm()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        ➕ إضافة خادم جديد
+                    </button>
+                </div>
+                
+                <div class="bg-white rounded-lg p-4">
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="p-3 text-right">الكود</th>
+                                    <th class="p-3 text-right">الاسم</th>
+                                    <th class="p-3 text-center">التخصص</th>
+                                    <th class="p-3 text-center">الفصل</th>
+                                    <th class="p-3 text-center">الهاتف</th>
+                                    <th class="p-3 text-center">الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${teachers.length === 0 ? `
+                                    <tr>
+                                        <td colspan="6" class="p-8 text-center text-gray-500">
+                                            لا يوجد خدام مسجلين بعد
+                                        </td>
+                                    </tr>
+                                ` : teachers.map(teacher => `
+                                    <tr class="border-b hover:bg-gray-50">
+                                        <td class="p-3 font-mono text-sm">${teacher.code}</td>
+                                        <td class="p-3 font-semibold">${teacher.name}</td>
+                                        <td class="p-3 text-center">${teacher.specialty}</td>
+                                        <td class="p-3 text-center">${teacher.className}</td>
+                                        <td class="p-3 text-center">${teacher.phone}</td>
+                                        <td class="p-3 text-center">
+                                            <button onclick="editTeacher('${teacher.code}')" class="text-blue-600 hover:text-blue-800 mx-1">✏️</button>
+                                            <button onclick="deleteTeacher('${teacher.code}')" class="text-red-600 hover:text-red-800 mx-1">🗑️</button>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showAddTeacherForm() {
+            const modal = createModal('إضافة خادم جديد', `
+                <form id="addTeacherForm" onsubmit="saveTeacher(event)" class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">اسم الخادم *</label>
+                            <input type="text" name="name" required class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">رقم الهاتف *</label>
+                            <input type="tel" name="phone" required class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">التخصص *</label>
+                            <select name="specialty" required class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر...</option>
+                                ${SPECIALTIES.map(spec => `<option value="${spec}">${spec}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">الفصل المسؤول عنه</label>
+                            <select name="className" class="w-full p-2 border border-gray-300 rounded-lg">
+                                <option value="">اختر...</option>
+                                ${CLASSES.map(cls => `<option value="${cls}">${cls}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">كلمة المرور *</label>
+                            <input type="password" name="password" required class="w-full p-2 border border-gray-300 rounded-lg">
+                        </div>
+                    </div>
+                    
+                    <div class="flex justify-end gap-2 mt-6">
+                        <button type="button" onclick="closeModal()" class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400">
+                            إلغاء
+                        </button>
+                        <button type="submit" class="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                            حفظ
+                        </button>
+                    </div>
+                </form>
+            `);
+        }
+
+        function saveTeacher(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            
+            const newTeacher = {
+                code: generateCode(''),
+                name: formData.get('name'),
+                phone: formData.get('phone'),
+                specialty: formData.get('specialty'),
+                className: formData.get('className'),
+                password: formData.get('password'),
+                createdAt: new Date().toISOString()
+            };
+            
+            teachers.push(newTeacher);
+            
+            if (saveToStorage(STORAGE_KEYS.TEACHERS, teachers)) {
+                showToast(`تم إضافة الخادم بنجاح - الكود: ${newTeacher.code}`, 'success');
+                closeModal();
+                showTeachersManagement();
+                updateDashboardStats();
+            }
+        }
+
+        function deleteTeacher(code) {
+            if (!confirm('هل أنت متأكد من حذف هذا الخادم؟')) return;
+            
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            const filtered = teachers.filter(t => t.code !== code);
+            
+            if (saveToStorage(STORAGE_KEYS.TEACHERS, filtered)) {
+                showToast('تم حذف الخادم بنجاح', 'success');
+                showTeachersManagement();
+                updateDashboardStats();
+            }
+        }
+
+        // Attendance Management
+        function showAttendanceManagement() {
+            const content = document.getElementById('adminContent');
+            content.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="text-6xl mb-4">📝</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">إدارة الحضور والغياب</h3>
+                    <p class="text-gray-600">قريباً...</p>
+                </div>
+            `;
+        }
+
+        // Grades Management
+        function showGradesManagement() {
+            const content = document.getElementById('adminContent');
+            content.innerHTML = `
+                <div class="text-center py-12">
+                    <div class="text-6xl mb-4">📈</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4">إدارة الدرجات</h3>
+                    <p class="text-gray-600">قريباً...</p>
+                </div>
+            `;
+        }
+
+        // Backup Page
+        function showBackupPage() {
+            const content = document.getElementById('adminContent');
+            
+            content.innerHTML = `
+                <div class="space-y-8">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">💾 النسخ الاحتياطي والاستعادة</h3>
+                    
+                    <!-- Students Backup -->
+                    <div class="backup-card bg-white rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl ml-3">👥</div>
+                            <h4 class="text-xl font-bold text-gray-800">نسخ احتياطي للدارسين</h4>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-semibold text-gray-700 mb-2">📤 تصدير</h5>
+                                <div class="space-y-2">
+                                    <button onclick="exportStudentsExcel()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        📊 تصدير Excel
+                                    </button>
+                                    <button onclick="exportStudentsJSON()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        📄 تصدير JSON
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-gray-700 mb-2">📥 استيراد</h5>
+                                <div class="space-y-2">
+                                    <button onclick="document.getElementById('importStudentsExcel').click()" class="w-full bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
+                                        📊 استيراد Excel
+                                    </button>
+                                    <button onclick="document.getElementById('importStudentsJSON').click()" class="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                        📄 استيراد JSON
+                                    </button>
+                                    <input type="file" id="importStudentsExcel" accept=".xlsx,.xls" onchange="importStudentsExcel(event)" class="hidden">
+                                    <input type="file" id="importStudentsJSON" accept=".json" onchange="importStudentsJSON(event)" class="hidden">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Teachers Backup -->
+                    <div class="backup-card bg-white rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl ml-3">👨‍🏫</div>
+                            <h4 class="text-xl font-bold text-gray-800">نسخ احتياطي للخدام</h4>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-semibold text-gray-700 mb-2">📤 تصدير</h5>
+                                <div class="space-y-2">
+                                    <button onclick="exportTeachersExcel()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        📊 تصدير Excel
+                                    </button>
+                                    <button onclick="exportTeachersJSON()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        📄 تصدير JSON
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-gray-700 mb-2">📥 استيراد</h5>
+                                <div class="space-y-2">
+                                    <button onclick="document.getElementById('importTeachersExcel').click()" class="w-full bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
+                                        📊 استيراد Excel
+                                    </button>
+                                    <button onclick="document.getElementById('importTeachersJSON').click()" class="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                        📄 استيراد JSON
+                                    </button>
+                                    <input type="file" id="importTeachersExcel" accept=".xlsx,.xls" onchange="importTeachersExcel(event)" class="hidden">
+                                    <input type="file" id="importTeachersJSON" accept=".json" onchange="importTeachersJSON(event)" class="hidden">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Full Backup -->
+                    <div class="backup-card bg-white rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl ml-3">🗄️</div>
+                            <h4 class="text-xl font-bold text-gray-800">نسخ احتياطي كامل للنظام</h4>
+                        </div>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-semibold text-gray-700 mb-2">📤 تصدير</h5>
+                                <div class="space-y-2">
+                                    <button onclick="exportFullExcel()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                                        📊 تصدير Excel كامل
+                                    </button>
+                                    <button onclick="exportFullJSON()" class="w-full bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">
+                                        📄 تصدير JSON كامل
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold text-gray-700 mb-2">📥 استيراد</h5>
+                                <div class="space-y-2">
+                                    <button onclick="document.getElementById('importFullJSON').click()" class="w-full bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+                                        📄 استيراد JSON كامل
+                                    </button>
+                                    <input type="file" id="importFullJSON" accept=".json" onchange="importFullJSON(event)" class="hidden">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Danger Zone -->
+                    <div class="danger-zone rounded-lg p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="text-3xl ml-3">⚠️</div>
+                            <h4 class="text-xl font-bold text-red-800">منطقة الخطر</h4>
+                        </div>
+                        <p class="text-red-700 mb-4">تحذير: هذا الإجراء لا يمكن التراجع عنه!</p>
+                        <button onclick="deleteAllData()" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition-colors font-bold">
+                            🗑️ مسح جميع البيانات
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Export Functions
+        function exportStudentsExcel() {
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            
+            if (students.length === 0) {
+                showToast('لا يوجد دارسين لتصديرهم', 'error');
+                return;
+            }
+            
+            const ws = XLSX.utils.json_to_sheet(students);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Students');
+            XLSX.writeFile(wb, `students_${new Date().toISOString().split('T')[0]}.xlsx`);
+            
+            showToast('تم تصدير بيانات الدارسين بنجاح', 'success');
+        }
+
+        function exportStudentsJSON() {
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            
+            if (students.length === 0) {
+                showToast('لا يوجد دارسين لتصديرهم', 'error');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(students, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `students_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showToast('تم تصدير بيانات الدارسين بنجاح', 'success');
+        }
+
+        function exportTeachersExcel() {
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            
+            if (teachers.length === 0) {
+                showToast('لا يوجد خدام لتصديرهم', 'error');
+                return;
+            }
+            
+            const ws = XLSX.utils.json_to_sheet(teachers);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, 'Teachers');
+            XLSX.writeFile(wb, `teachers_${new Date().toISOString().split('T')[0]}.xlsx`);
+            
+            showToast('تم تصدير بيانات الخدام بنجاح', 'success');
+        }
+
+        function exportTeachersJSON() {
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            
+            if (teachers.length === 0) {
+                showToast('لا يوجد خدام لتصديرهم', 'error');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(teachers, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `teachers_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showToast('تم تصدير بيانات الخدام بنجاح', 'success');
+        }
+
+        function exportFullExcel() {
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            const attendance = loadFromStorage(STORAGE_KEYS.ATTENDANCE, []);
+            const grades = loadFromStorage(STORAGE_KEYS.GRADES, []);
+            
+            const wb = XLSX.utils.book_new();
+            
+            if (students.length > 0) {
+                const ws1 = XLSX.utils.json_to_sheet(students);
+                XLSX.utils.book_append_sheet(wb, ws1, 'Students');
+            }
+            
+            if (teachers.length > 0) {
+                const ws2 = XLSX.utils.json_to_sheet(teachers);
+                XLSX.utils.book_append_sheet(wb, ws2, 'Teachers');
+            }
+            
+            if (attendance.length > 0) {
+                const ws3 = XLSX.utils.json_to_sheet(attendance);
+                XLSX.utils.book_append_sheet(wb, ws3, 'Attendance');
+            }
+            
+            if (grades.length > 0) {
+                const ws4 = XLSX.utils.json_to_sheet(grades);
+                XLSX.utils.book_append_sheet(wb, ws4, 'Grades');
+            }
+            
+            XLSX.writeFile(wb, `alhabeeb_full_backup_${new Date().toISOString().split('T')[0]}.xlsx`);
+            
+            showToast('تم تصدير النسخة الاحتياطية الكاملة بنجاح', 'success');
+        }
+
+        function exportFullJSON() {
+            const fullBackup = {
+                students: loadFromStorage(STORAGE_KEYS.STUDENTS, []),
+                teachers: loadFromStorage(STORAGE_KEYS.TEACHERS, []),
+                attendance: loadFromStorage(STORAGE_KEYS.ATTENDANCE, []),
+                grades: loadFromStorage(STORAGE_KEYS.GRADES, []),
+                homework: loadFromStorage(STORAGE_KEYS.HOMEWORK, []),
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(fullBackup, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `alhabeeb_full_backup_${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            
+            showToast('تم تصدير النسخة الاحتياطية الكاملة بنجاح', 'success');
+        }
+
+        // Import Functions
+        function importStudentsExcel(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const students = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    if (saveToStorage(STORAGE_KEYS.STUDENTS, students)) {
+                        showToast(`تم استيراد ${students.length} دارس بنجاح`, 'success');
+                        showStudentsManagement();
+                        updateDashboardStats();
+                    }
+                } catch (error) {
+                    console.error('خطأ في استيراد الملف:', error);
+                    showToast('خطأ في استيراد الملف', 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function importStudentsJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const students = JSON.parse(e.target.result);
+                    
+                    if (saveToStorage(STORAGE_KEYS.STUDENTS, students)) {
+                        showToast(`تم استيراد ${students.length} دارس بنجاح`, 'success');
+                        showStudentsManagement();
+                        updateDashboardStats();
+                    }
+                } catch (error) {
+                    console.error('خطأ في استيراد الملف:', error);
+                    showToast('خطأ في استيراد الملف', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function importTeachersExcel(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    const teachers = XLSX.utils.sheet_to_json(firstSheet);
+                    
+                    if (saveToStorage(STORAGE_KEYS.TEACHERS, teachers)) {
+                        showToast(`تم استيراد ${teachers.length} خادم بنجاح`, 'success');
+                        showTeachersManagement();
+                        updateDashboardStats();
+                    }
+                } catch (error) {
+                    console.error('خطأ في استيراد الملف:', error);
+                    showToast('خطأ في استيراد الملف', 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function importTeachersJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const teachers = JSON.parse(e.target.result);
+                    
+                    if (saveToStorage(STORAGE_KEYS.TEACHERS, teachers)) {
+                        showToast(`تم استيراد ${teachers.length} خادم بنجاح`, 'success');
+                        showTeachersManagement();
+                        updateDashboardStats();
+                    }
+                } catch (error) {
+                    console.error('خطأ في استيراد الملف:', error);
+                    showToast('خطأ في استيراد الملف', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function importFullJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const backup = JSON.parse(e.target.result);
+                    
+                    if (backup.students) saveToStorage(STORAGE_KEYS.STUDENTS, backup.students);
+                    if (backup.teachers) saveToStorage(STORAGE_KEYS.TEACHERS, backup.teachers);
+                    if (backup.attendance) saveToStorage(STORAGE_KEYS.ATTENDANCE, backup.attendance);
+                    if (backup.grades) saveToStorage(STORAGE_KEYS.GRADES, backup.grades);
+                    if (backup.homework) saveToStorage(STORAGE_KEYS.HOMEWORK, backup.homework);
+                    
+                    showToast('تم استيراد النسخة الاحتياطية الكاملة بنجاح', 'success');
+                    updateDashboardStats();
+                } catch (error) {
+                    console.error('خطأ في استيراد الملف:', error);
+                    showToast('خطأ في استيراد الملف', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function deleteAllData() {
+            const confirmation = prompt('لحذف جميع البيانات، اكتب "DELETE" بالأحرف الكبيرة:');
+            
+            if (confirmation === 'DELETE') {
+                localStorage.removeItem(STORAGE_KEYS.STUDENTS);
+                localStorage.removeItem(STORAGE_KEYS.TEACHERS);
+                localStorage.removeItem(STORAGE_KEYS.ATTENDANCE);
+                localStorage.removeItem(STORAGE_KEYS.GRADES);
+                localStorage.removeItem(STORAGE_KEYS.HOMEWORK);
+                
+                showToast('تم حذف جميع البيانات بنجاح', 'success');
+                updateDashboardStats();
+                showBackupPage();
+            } else {
+                showToast('تم إلغاء العملية', 'error');
+            }
+        }
+
+        // Teacher Sections
+        function showTeacherSection(section) {
+            const content = document.getElementById('teacherContent');
+            
+            if (section === 'dashboard') {
+                content.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="text-6xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">لوحة الخادم</h3>
+                        <p class="text-gray-600">مرحباً ${currentUser.data.name}</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Student Sections
+        function showStudentSection(section) {
+            const content = document.getElementById('studentContent');
+            
+            if (section === 'profile') {
+                const student = currentUser.data;
+                
+                content.innerHTML = `
+                    <div class="bg-purple-50 rounded-lg p-6">
+                        <h3 class="text-xl font-bold text-purple-800 mb-4">👤 البيانات الشخصية</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span>الاسم:</span>
+                                <span class="font-semibold">${student.name}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>كود الدارس:</span>
+                                <span class="font-semibold font-mono">${student.code}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>النوع:</span>
+                                <span class="font-semibold">${student.gender}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>المرحلة:</span>
+                                <span class="font-semibold">${student.stage}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>الفصل:</span>
+                                <span class="font-semibold">${student.className}</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>رقم الهاتف:</span>
+                                <span class="font-semibold">${student.phone1}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        // Update Dashboard Stats
+        function updateDashboardStats() {
+            const students = loadFromStorage(STORAGE_KEYS.STUDENTS, []);
+            const teachers = loadFromStorage(STORAGE_KEYS.TEACHERS, []);
+            
+            const totalStudentsEl = document.getElementById('totalStudentsCount');
+            const totalTeachersEl = document.getElementById('totalTeachersCount');
+            
+            if (totalStudentsEl) totalStudentsEl.textContent = students.length;
+            if (totalTeachersEl) totalTeachersEl.textContent = teachers.length;
+        }
+
+        // Modal Helper
+        function createModal(title, content) {
+            const modal = document.createElement('div');
+            modal.id = 'customModal';
+            modal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4';
+            
+            modal.innerHTML = `
+                <div class="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800">${title}</h2>
+                            <button onclick="closeModal()" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                        </div>
+                        ${content}
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            return modal;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('customModal');
+            if (modal) modal.remove();
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `fixed top-4 left-1/2 transform -translate-x-1/2 px-6 py-3 rounded-lg shadow-lg z-50 ${
+                type === 'success' ? 'bg-green-600' : 'bg-red-600'
+            } text-white`;
+            toast.textContent = message;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.remove();
+            }, 3000);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', initializeSystem);
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'99d48f9583bf73af',t:'MTc2MjkzNTExMC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
